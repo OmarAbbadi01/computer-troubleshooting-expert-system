@@ -1,0 +1,227 @@
+{
+  "main_problems": [
+    {
+      "id": "power_off",
+      "label": "Computer does not turn on",
+      "questions": ["q_power_led", "q_fans", "q_power_cable", "q_outlet"]
+    },
+    {
+      "id": "blank_screen",
+      "label": "Computer turns on but the screen is blank",
+      "questions": ["q_computer_running", "q_screen_blank", "q_post_screen", "q_external_monitor"]
+    },
+    {
+      "id": "boot_problem",
+      "label": "Computer does not boot properly",
+      "questions": ["q_computer_running", "q_post_screen", "q_os_loading_screen", "q_bsod"]
+    },
+    {
+      "id": "slow",
+      "label": "Computer is slow",
+      "questions": ["q_os_load_time", "q_program_launch", "q_disk_nearly_full", "q_disk_activity", "q_startup_programs"]
+    },
+    {
+      "id": "overheating",
+      "label": "Computer gets hot or shuts down",
+      "questions": ["q_computer_running", "q_computer_hot", "q_shutdown", "q_fans", "q_vent_blocked", "q_fan_noise"]
+    },
+    {
+      "id": "network",
+      "label": "Internet/network is not working",
+      "questions": ["q_wifi_connected", "q_networks_visible", "q_router_reachable", "q_internet", "q_other_devices", "q_ip_address"]
+    },
+    {
+      "id": "storage",
+      "label": "Storage-related problem",
+      "questions": ["q_disk_nearly_full", "q_disk_activity", "q_disk_errors", "q_files_corrupt"]
+    },
+    {
+      "id": "memory",
+      "label": "Memory-related problem",
+      "questions": ["q_ram_usage", "q_freezes", "q_app_crashes", "q_ram_detected"]
+    },
+    {
+      "id": "peripheral",
+      "label": "Peripheral/device is not working",
+      "questions": ["q_device_detected", "q_device_other_port", "q_device_other_computer", "q_driver"]
+    }
+  ],
+  "questions": {
+    "q_power_led": {
+      "text": "When you press the power button, does the power LED light up?",
+      "yes_fact": "power_led_on",
+      "no_fact": "power_led_off"
+    },
+    "q_fans": {
+      "text": "When the computer is switched on, do the fans spin (or do you hear the machine humming)?",
+      "yes_fact": "fans_running",
+      "no_fact": "fans_not_running"
+    },
+    "q_power_cable": {
+      "text": "Is the power cable connected firmly to both the computer and the wall socket?",
+      "yes_fact": "power_cable_ok",
+      "no_fact": "power_cable_loose"
+    },
+    "q_outlet": {
+      "text": "Does the wall socket supply power to other devices correctly?",
+      "yes_fact": "outlet_power_ok",
+      "no_fact": "outlet_power_fails"
+    },
+    "q_computer_running": {
+      "text": "Does the computer switch on and stay running (lights and fans active)?",
+      "yes_fact": "computer_running",
+      "no_fact": "computer_not_running"
+    },
+    "q_screen_blank": {
+      "text": "Is the screen completely blank (no picture at all)?",
+      "yes_fact": "screen_blank",
+      "no_fact": "screen_has_image"
+    },
+    "q_post_screen": {
+      "text": "At startup, do you briefly see the manufacturer logo or the BIOS screen?",
+      "yes_fact": "post_screen_visible",
+      "no_fact": "post_screen_blank"
+    },
+    "q_external_monitor": {
+      "text": "If you connect an external monitor, does it show a picture?",
+      "yes_fact": "external_monitor_works",
+      "no_fact": "external_monitor_blank",
+      "laptop_only": true
+    },
+    "q_os_loading_screen": {
+      "text": "After the logo screen, does the operating system loading screen appear (e.g., the Windows logo)?",
+      "yes_fact": "os_loading_screen_visible",
+      "no_fact": "os_loading_screen_absent"
+    },
+    "q_bsod": {
+      "text": "Does the computer show a blue or black error screen while starting?",
+      "yes_fact": "bsod_occurs",
+      "no_fact": "no_bsod"
+    },
+    "q_os_load_time": {
+      "text": "Does the operating system take a long time to start?",
+      "yes_fact": "os_loads_slowly",
+      "no_fact": "os_loads_normal"
+    },
+    "q_program_launch": {
+      "text": "Do programs take a long time to open?",
+      "yes_fact": "programs_launch_slowly",
+      "no_fact": "programs_launch_normal"
+    },
+    "q_disk_nearly_full": {
+      "text": "Is the hard disk almost full?",
+      "yes_fact": "disk_nearly_full",
+      "no_fact": "disk_has_space"
+    },
+    "q_startup_programs": {
+      "text": "Do many programs start automatically when the computer starts?",
+      "yes_fact": "many_startup_programs",
+      "no_fact": "few_startup_programs"
+    },
+    "q_computer_hot": {
+      "text": "Does the computer become unusually hot?",
+      "yes_fact": "computer_hot",
+      "no_fact": "computer_cool"
+    },
+    "q_shutdown": {
+      "text": "Does the computer shut down unexpectedly on its own?",
+      "yes_fact": "shuts_down_unexpectedly",
+      "no_fact": "shuts_down_normally"
+    },
+    "q_vent_blocked": {
+      "text": "Are the ventilation openings blocked or covered?",
+      "yes_fact": "vents_blocked",
+      "no_fact": "vents_clear"
+    },
+    "q_fan_noise": {
+      "text": "Is the cooling fan unusually loud?",
+      "yes_fact": "fan_unusually_noisy",
+      "no_fact": "fan_quiet_normal"
+    },
+    "q_wifi_connected": {
+      "text": "Is the computer connected to Wi-Fi?",
+      "yes_fact": "wifi_connected",
+      "no_fact": "wifi_disconnected"
+    },
+    "q_networks_visible": {
+      "text": "Does the computer find any available Wi-Fi networks?",
+      "yes_fact": "wifi_shows_networks",
+      "no_fact": "wifi_no_networks"
+    },
+    "q_router_reachable": {
+      "text": "Can the computer communicate with the router (the local network)?",
+      "yes_fact": "router_reachable",
+      "no_fact": "router_unreachable"
+    },
+    "q_internet": {
+      "text": "Can you open websites or reach the internet?",
+      "yes_fact": "internet_reachable",
+      "no_fact": "internet_unreachable"
+    },
+    "q_other_devices": {
+      "text": "Do other devices on the same network also have no internet access?",
+      "yes_fact": "other_devices_offline",
+      "no_fact": "other_devices_online"
+    },
+    "q_ip_address": {
+      "text": "Does the computer obtain a valid IP address (not starting with 169.254)?",
+      "yes_fact": "ip_address_assigned",
+      "no_fact": "ip_address_missing"
+    },
+    "q_disk_activity": {
+      "text": "Is the disk constantly busy at high (100%) activity for long periods?",
+      "yes_fact": "disk_activity_high",
+      "no_fact": "disk_activity_normal"
+    },
+    "q_disk_errors": {
+      "text": "Does the system report disk errors?",
+      "yes_fact": "disk_errors_reported",
+      "no_fact": "disk_errors_absent"
+    },
+    "q_files_corrupt": {
+      "text": "Are files missing or corrupted?",
+      "yes_fact": "files_missing_corrupt",
+      "no_fact": "files_intact"
+    },
+    "q_ram_usage": {
+      "text": "Is RAM usage close to 100% even with few programs open?",
+      "yes_fact": "ram_usage_high",
+      "no_fact": "ram_usage_normal"
+    },
+    "q_freezes": {
+      "text": "Does the system freeze or become unresponsive?",
+      "yes_fact": "system_freezes",
+      "no_fact": "system_responsive"
+    },
+    "q_app_crashes": {
+      "text": "Do applications crash frequently?",
+      "yes_fact": "frequent_app_crashes",
+      "no_fact": "apps_stable"
+    },
+    "q_ram_detected": {
+      "text": "Does the system show all the installed RAM?",
+      "yes_fact": "ram_sticks_detected",
+      "no_fact": "ram_sticks_missing"
+    },
+    "q_device_detected": {
+      "text": "Does the operating system detect the device?",
+      "yes_fact": "device_detected",
+      "no_fact": "device_not_detected"
+    },
+    "q_device_other_port": {
+      "text": "Does the device work when connected to a different port?",
+      "yes_fact": "device_works_in_another_port",
+      "no_fact": "device_fails_any_port"
+    },
+    "q_device_other_computer": {
+      "text": "Does the device work when connected to another computer?",
+      "yes_fact": "device_works_on_other_computer",
+      "no_fact": "device_fails_other_computer"
+    },
+    "q_driver": {
+      "text": "Does the system show a driver warning for the device?",
+      "yes_fact": "driver_issue",
+      "no_fact": "drivers_installed"
+    }
+  }
+}

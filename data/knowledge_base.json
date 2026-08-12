@@ -1,0 +1,314 @@
+{
+  "diagnoses": {
+    "diagnosis_power": {
+      "name": "Power problem",
+      "default_recommendation": "Check the power connections and try a different wall socket."
+    },
+    "diagnosis_display": {
+      "name": "Display problem",
+      "default_recommendation": "Check the monitor cable and try a different port or screen."
+    },
+    "diagnosis_boot": {
+      "name": "Boot / operating-system problem",
+      "default_recommendation": "Try Safe Mode and use the operating system startup repair."
+    },
+    "diagnosis_performance": {
+      "name": "Performance problem",
+      "default_recommendation": "Close background programs and free up disk space."
+    },
+    "diagnosis_overheating": {
+      "name": "Overheating problem",
+      "default_recommendation": "Check that the cooling vents are not blocked and the fans work."
+    },
+    "diagnosis_network": {
+      "name": "Network problem",
+      "default_recommendation": "Restart the router/modem and check the internet connection."
+    },
+    "diagnosis_storage": {
+      "name": "Storage problem",
+      "default_recommendation": "Free up disk space and run a disk-check tool."
+    },
+    "diagnosis_memory": {
+      "name": "Memory problem",
+      "default_recommendation": "Close unused programs and consider adding more RAM."
+    },
+    "diagnosis_peripheral": {
+      "name": "Peripheral/device problem",
+      "default_recommendation": "Reconnect the device and check its driver."
+    }
+  },
+  "intermediate_facts": {
+    "power_delivery_issue": "Possible problem delivering power to the computer",
+    "internal_power_fault": "Possible internal power fault (e.g., power supply)",
+    "display_path_fault": "Possible display-path failure",
+    "backlight_or_panel_fault": "Possible laptop screen / backlight failure",
+    "os_boot_reached": "Operating system reached the boot stage",
+    "os_boot_failed": "Operating system fails to boot",
+    "system_slow_indicators": "General slowness indicators",
+    "startup_overload": "Too many programs start with the system",
+    "cooling_problem": "Cooling problem exists",
+    "local_connectivity_only": "Connectivity works only locally",
+    "storage_pressure": "Storage pressure exists",
+    "memory_pressure": "Memory pressure exists"
+  },
+  "rules": [
+    {
+      "id": "P1",
+      "priority": 2,
+      "conditions": ["power_cable_loose"],
+      "conclusions": ["power_delivery_issue"],
+      "explanation": "The power cable is not connected firmly, so electricity may not reach the computer."
+    },
+    {
+      "id": "P2",
+      "priority": 2,
+      "conditions": ["outlet_power_fails"],
+      "conclusions": ["power_delivery_issue"],
+      "explanation": "The wall socket is not supplying power correctly, so the computer cannot receive electricity."
+    },
+    {
+      "id": "P3",
+      "priority": 9,
+      "conditions": ["power_delivery_issue", "power_led_off"],
+      "conclusions": ["diagnosis_power"],
+      "explanation": "The power LED is off and the system inferred a problem delivering power to the computer, which points to a power problem.",
+      "recommendation": "Check the power cable connections and try another wall socket. For a laptop, also check the charger."
+    },
+    {
+      "id": "P4",
+      "priority": 3,
+      "conditions": ["power_led_off", "fans_not_running", "power_cable_ok", "outlet_power_ok"],
+      "conclusions": ["internal_power_fault"],
+      "explanation": "Power reaches the computer (cable and socket are fine) but pressing the power button produces no LED and no fans, suggesting an internal power fault such as a failing power supply."
+    },
+    {
+      "id": "P5",
+      "priority": 8,
+      "conditions": ["internal_power_fault"],
+      "conclusions": ["diagnosis_power"],
+      "explanation": "The system inferred an internal power fault because the machine receives power from the wall but cannot switch on. This is a power problem.",
+      "recommendation": "Check that the power supply connections are seated correctly. If the problem persists, the power supply may need professional repair."
+    },
+    {
+      "id": "D1",
+      "priority": 3,
+      "conditions": ["computer_running", "screen_blank", "post_screen_blank"],
+      "conclusions": ["display_path_fault"],
+      "explanation": "The computer is running but the screen stays blank even during startup, so no display signal is reaching the screen."
+    },
+    {
+      "id": "D2",
+      "priority": 8,
+      "conditions": ["display_path_fault"],
+      "conclusions": ["diagnosis_display"],
+      "explanation": "The system first inferred a display-path failure: the computer runs but shows no picture at all. This is a display problem.",
+      "recommendation": "Check the monitor cable and try a different port or monitor. For a laptop, connect an external screen to test."
+    },
+    {
+      "id": "D3",
+      "priority": 3,
+      "conditions": ["external_monitor_works", "screen_blank"],
+      "conclusions": ["backlight_or_panel_fault"],
+      "explanation": "The built-in screen is blank but an external monitor shows a picture, so the laptop still produces a display signal and the screen or its backlight is faulty."
+    },
+    {
+      "id": "D4",
+      "priority": 8,
+      "conditions": ["backlight_or_panel_fault"],
+      "conclusions": ["diagnosis_display"],
+      "explanation": "The system inferred that the built-in screen or its backlight is faulty because an external monitor works. This is a display problem.",
+      "recommendation": "Use an external monitor meanwhile; the built-in screen or backlight may need service."
+    },
+    {
+      "id": "B1",
+      "priority": 2,
+      "conditions": ["os_loading_screen_visible"],
+      "conclusions": ["os_boot_reached"],
+      "explanation": "The operating system loading screen appeared, so the OS reached the boot stage."
+    },
+    {
+      "id": "B2",
+      "priority": 8,
+      "conditions": ["os_boot_reached", "bsod_occurs"],
+      "conclusions": ["diagnosis_boot"],
+      "explanation": "The system inferred that the operating system reached the boot stage, but it then shows an error screen. This indicates a boot or operating-system problem.",
+      "recommendation": "Try Safe Mode and use the operating system startup repair. If you recently installed software, consider removing it."
+    },
+    {
+      "id": "B3",
+      "priority": 3,
+      "conditions": ["post_screen_visible", "os_loading_screen_absent"],
+      "conclusions": ["os_boot_failed"],
+      "explanation": "The BIOS screen appears but the operating system never starts loading, so the OS fails to reach the boot stage."
+    },
+    {
+      "id": "B4",
+      "priority": 8,
+      "conditions": ["os_boot_failed"],
+      "conclusions": ["diagnosis_boot"],
+      "explanation": "The system inferred that the operating system fails to boot after the BIOS screen. This is a boot or operating-system problem.",
+      "recommendation": "Try Safe Mode, use a repair/recovery drive, or reinstall the operating system after backing up your data."
+    },
+    {
+      "id": "PERF1",
+      "priority": 2,
+      "conditions": ["os_loads_slowly", "programs_launch_slowly"],
+      "conclusions": ["system_slow_indicators"],
+      "explanation": "The operating system starts slowly and programs are slow to open, so the system generally runs slowly."
+    },
+    {
+      "id": "PERF2",
+      "priority": 8,
+      "conditions": ["system_slow_indicators", "disk_nearly_full"],
+      "conclusions": ["diagnosis_performance"],
+      "explanation": "The system runs slowly and the disk is almost full, which explains the poor performance.",
+      "recommendation": "Free up disk space by removing unnecessary files and programs."
+    },
+    {
+      "id": "PERF3",
+      "priority": 3,
+      "conditions": ["system_slow_indicators", "many_startup_programs"],
+      "conclusions": ["startup_overload"],
+      "explanation": "Many programs start with Windows while the system is slow, so startup is overloaded."
+    },
+    {
+      "id": "PERF4",
+      "priority": 8,
+      "conditions": ["startup_overload"],
+      "conclusions": ["diagnosis_performance"],
+      "explanation": "The system inferred a startup overload: too many programs start with Windows, slowing the boot and responsiveness.",
+      "recommendation": "Disable unnecessary startup programs from Task Manager."
+    },
+    {
+      "id": "O1",
+      "priority": 3,
+      "conditions": ["computer_running", "computer_hot", "fans_not_running"],
+      "conclusions": ["cooling_problem"],
+      "explanation": "The computer is running and hot, but the cooling fans are not spinning, so cooling is not working."
+    },
+    {
+      "id": "O2",
+      "priority": 3,
+      "conditions": ["computer_hot", "vents_blocked"],
+      "conclusions": ["cooling_problem"],
+      "explanation": "The computer is hot and its ventilation openings are blocked, so heat cannot escape."
+    },
+    {
+      "id": "O3",
+      "priority": 8,
+      "conditions": ["cooling_problem", "shuts_down_unexpectedly"],
+      "conclusions": ["diagnosis_overheating"],
+      "explanation": "The system first inferred a cooling problem, which combined with unexpected shutdowns supports an overheating diagnosis.",
+      "recommendation": "Check that the cooling vents are not blocked and verify that the cooling fans are operating normally."
+    },
+    {
+      "id": "O4",
+      "priority": 8,
+      "conditions": ["computer_hot", "fan_unusually_noisy", "shuts_down_unexpectedly"],
+      "conclusions": ["diagnosis_overheating"],
+      "explanation": "The computer is unusually hot, its fan is loud, and it shuts down unexpectedly — classic signs of overheating.",
+      "recommendation": "Clean the dust from the fans and vents and make sure nothing blocks the airflow."
+    },
+    {
+      "id": "NET1",
+      "priority": 3,
+      "conditions": ["wifi_connected", "router_reachable", "internet_unreachable"],
+      "conclusions": ["local_connectivity_only"],
+      "explanation": "The computer is connected to Wi-Fi and reaches the router, but cannot reach the internet, so connectivity works only locally."
+    },
+    {
+      "id": "NET2",
+      "priority": 8,
+      "conditions": ["local_connectivity_only"],
+      "conclusions": ["diagnosis_network"],
+      "explanation": "The system inferred that connectivity works only inside the local network. Since the internet is unreachable, this is a network problem.",
+      "recommendation": "Restart the router and modem. If the problem persists, contact your internet service provider."
+    },
+    {
+      "id": "NET3",
+      "priority": 8,
+      "conditions": ["wifi_no_networks", "other_devices_offline"],
+      "conclusions": ["diagnosis_network"],
+      "explanation": "No Wi-Fi networks are visible and other devices are offline too, so the network itself is failing.",
+      "recommendation": "Restart the router. If it still fails, check the internet connection with your service provider."
+    },
+    {
+      "id": "NET4",
+      "priority": 8,
+      "conditions": ["ip_address_missing", "router_reachable", "wifi_connected"],
+      "conclusions": ["diagnosis_network"],
+      "explanation": "The computer is connected to Wi-Fi and can reach the router, but it does not obtain a valid IP address, indicating a network problem.",
+      "recommendation": "Renew the IP address (release/renew in the network settings) and restart the router."
+    },
+    {
+      "id": "S1",
+      "priority": 3,
+      "conditions": ["disk_nearly_full", "disk_activity_high"],
+      "conclusions": ["storage_pressure"],
+      "explanation": "The disk is almost full and constantly busy, so it is under storage pressure."
+    },
+    {
+      "id": "S2",
+      "priority": 8,
+      "conditions": ["storage_pressure"],
+      "conclusions": ["diagnosis_storage"],
+      "explanation": "The system inferred storage pressure because the disk is nearly full and continuously active, indicating a storage problem.",
+      "recommendation": "Free up disk space by removing unnecessary files, emptying the recycle bin, and uninstalling unused programs."
+    },
+    {
+      "id": "S3",
+      "priority": 8,
+      "conditions": ["disk_errors_reported", "files_missing_corrupt"],
+      "conclusions": ["diagnosis_storage"],
+      "explanation": "The disk reports errors and files are missing or corrupted, which indicates a storage problem.",
+      "recommendation": "Back up your important data and run the operating system's disk-check tool to look for bad sectors."
+    },
+    {
+      "id": "M1",
+      "priority": 3,
+      "conditions": ["ram_usage_high", "system_freezes"],
+      "conclusions": ["memory_pressure"],
+      "explanation": "RAM usage is near its limit and the system freezes, so memory is under pressure."
+    },
+    {
+      "id": "M2",
+      "priority": 8,
+      "conditions": ["memory_pressure"],
+      "conclusions": ["diagnosis_memory"],
+      "explanation": "The system inferred memory pressure because RAM is nearly exhausted and the system freezes, indicating a memory problem.",
+      "recommendation": "Close unnecessary programs and consider adding more RAM."
+    },
+    {
+      "id": "M3",
+      "priority": 8,
+      "conditions": ["ram_sticks_missing", "frequent_app_crashes"],
+      "conclusions": ["diagnosis_memory"],
+      "explanation": "Some installed RAM is not detected and applications crash frequently, indicating a memory problem.",
+      "recommendation": "Reseat the memory modules and test each memory stick individually."
+    },
+    {
+      "id": "PE1",
+      "priority": 8,
+      "conditions": ["device_not_detected", "device_fails_any_port", "device_fails_other_computer"],
+      "conclusions": ["diagnosis_peripheral"],
+      "explanation": "The device is not detected in any port and also fails on another computer, so the device itself is faulty.",
+      "recommendation": "Try the device on another computer to confirm. If it fails there too, the device may need replacement."
+    },
+    {
+      "id": "PE2",
+      "priority": 8,
+      "conditions": ["device_not_detected", "device_works_in_another_port"],
+      "conclusions": ["diagnosis_peripheral"],
+      "explanation": "The device is not detected in the original port but works in a different port, so the original port is faulty.",
+      "recommendation": "Use the working port or have the faulty port checked."
+    },
+    {
+      "id": "PE3",
+      "priority": 8,
+      "conditions": ["device_detected", "driver_issue"],
+      "conclusions": ["diagnosis_peripheral"],
+      "explanation": "The device is detected but the operating system shows a driver problem, so the device cannot be used correctly.",
+      "recommendation": "Reinstall or update the device driver from Device Manager."
+    }
+  ]
+}
