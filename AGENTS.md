@@ -47,7 +47,7 @@ User -> Questionnaire -> facts -> WorkingMemory -> Forward-Chaining Engine <-> K
 | `data/knowledge_base.json` | 34 IF-THEN rules + diagnoses metadata | **all domain knowledge** |
 | `data/questions.json` | 9 main problems + 35 questions (yes_fact / no_fact, laptop_only) | — |
 | `evaluation/cases.py` + `run_evaluation.py` | 10 (+1) scenarios; separate from the app | test-only |
-| `docs/` | Academic docs + `BEGINNERS_GUIDE.md` + `DISCUSSION_FAQ.md` | — |
+| `docs/DOCUMENTATION.md` | Single consolidated documentation (Arabic only) | — |
 
 ## Key implementation facts
 
@@ -80,18 +80,12 @@ User -> Questionnaire -> facts -> WorkingMemory -> Forward-Chaining Engine <-> K
 - Keep the knowledge base 30–35 rules and plain standard-library Python.
 - `knowledge_base.py` validation runs on load — malformed JSON fails with a readable `ValueError`.
 - Never hardcode the 10 evaluation cases into the application.
-- If a question/fact is added, re-run `python3 -m evaluation.run_evaluation` and update `evaluation/cases.py` + `docs/testing_evaluation.md` as needed.
+- If a question/fact is added, re-run `python3 -m evaluation.run_evaluation` and update `evaluation/cases.py` + `docs/DOCUMENTATION.md` as needed.
 
 ## Docs map
 
-- `README.md` — title, requirements, run instructions, architecture, example session
-- `docs/problem_analysis.md` — problem, target user, objectives (phase one)
-- `docs/knowledge_base.md` — fact categories, intermediate facts, diagnoses, all 34 rules, sources
-- `docs/inference_design.md` — why forward chaining, matching, firing order, fixed point, Mermaid diagram
-- `docs/testing_evaluation.md` — the 10 (+1) cases with expected vs actual
-- `docs/report_outline.md` — 15-section academic report template
-- `docs/BEGINNERS_GUIDE.md` — bilingual (EN/AR) beginner walkthrough; NOT part of submission
-- `docs/DISCUSSION_FAQ.md` — bilingual presentation Q&A with ready answers; NOT part of submission
+- `README.md` — short English index: run instructions, architecture, link to the docs
+- `docs/DOCUMENTATION.md` — **the single consolidated documentation, Arabic only**: problem analysis, knowledge base (all 34 rules), inference design, bilingual interface, testing/evaluation (11 cases), presentation flow, academic report outline, and presentation Q&A
 
 ## Evaluation summary (as of last run)
 

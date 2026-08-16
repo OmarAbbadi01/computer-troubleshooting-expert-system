@@ -74,7 +74,7 @@ User -> Questionnaire -> Input Facts -> Working Memory -> Forward-Chaining Engin
 | `data/knowledge_base.json` | The domain rules, diagnoses and recommendations |
 | `data/questions.json` | The questionnaire and the facts produced by each answer |
 | `evaluation/` | 10 independent evaluation scenarios (not used by the app) |
-| `docs/` | Academic documentation (analysis, KB, inference design, testing, outline) |
+| `docs/DOCUMENTATION.md` | Single consolidated documentation (in Arabic) |
 
 Key ideas:
 
@@ -90,8 +90,8 @@ Key ideas:
 
 ## Documentation
 
-- [docs/problem_analysis.md](docs/problem_analysis.md)
-- [docs/knowledge_base.md](docs/knowledge_base.md)
-- [docs/inference_design.md](docs/inference_design.md)
-- [docs/testing_evaluation.md](docs/testing_evaluation.md)
-- [docs/report_outline.md](docs/report_outline.md)
+The entire project documentation lives in one Arabic file:
+[docs/DOCUMENTATION.md](docs/DOCUMENTATION.md) — it covers problem analysis,
+the knowledge base (all 34 rules), inference design, the bilingual interface,
+testing & evaluation (11 cases), a presentation flow, an academic report
+outline, and a Q&A for the discussion.
