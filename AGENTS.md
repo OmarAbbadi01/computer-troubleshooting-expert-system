@@ -34,17 +34,17 @@ python3 -m py_compile main.py engine.py questionnaire.py knowledge_base.py model
 
 ```
 User -> Questionnaire -> facts -> WorkingMemory -> Forward-Chaining Engine <-> Knowledge Base (JSON)
-                                                    -> diagnoses -> explanation + recommendation (+ optional trace)
+                                                    -> diagnoses -> explanation + recommendation
 ```
 
 | File | Responsibility | Domain logic? |
 |------|----------------|---------------|
-| `main.py` | CLI: welcome, machine type, menu, questions, result + trace display | presentation only |
+| `main.py` | CLI: welcome, machine type, menu, questions, result display | presentation only |
 | `questionnaire.py` | Maps selected problem -> relevant questions; Yes/No answers -> facts (`Questionnaire`) | none (no diagnosis) |
 | `engine.py` | Generic forward chaining (`InferenceEngine`, `WorkingMemory`) | NONE — generic only |
 | `knowledge_base.py` | Loads + validates `data/*.json`; readable errors | validation only |
 | `models.py` | `Rule`, `Question`, `MainProblem`, `FiredRule`, `WorkingMemory` dataclasses | — |
-| `data/knowledge_base.json` | 34 IF-THEN rules + diagnoses metadata + intermediate-fact labels | **all domain knowledge** |
+| `data/knowledge_base.json` | 34 IF-THEN rules + diagnoses metadata | **all domain knowledge** |
 | `data/questions.json` | 9 main problems + 35 questions (yes_fact / no_fact, laptop_only) | — |
 | `evaluation/cases.py` + `run_evaluation.py` | 10 (+1) scenarios; separate from the app | test-only |
 | `docs/` | Academic docs + `BEGINNERS_GUIDE.md` + `DISCUSSION_FAQ.md` | — |
@@ -60,12 +60,10 @@ User -> Questionnaire -> facts -> WorkingMemory -> Forward-Chaining Engine <-> K
   chains; performance's startup-overload path is a 3-step chain.
 - **Diagnosis facts** use the `diagnosis_` prefix (e.g. `diagnosis_network`);
   the presentation layer treats any fact with that prefix as a final diagnosis.
-- **Priorities**: numeric, default 0, higher fires first (agenda sorted by
-  `(-priority, rule_id)`). Diagnosis rules use 8–9, intermediates 2–3.
 - **Termination**: a rule only fires if it adds at least one new fact, so no
   repeats and no infinite loops (fixed point). Facts are only added, never retracted.
-- **Input vs inferred facts**: tracked separately in `WorkingMemory`
-  (`user_facts`, `inferred_facts`, `facts` union, plus ordered `fired_rules` trace).
+- **Firing order**: rules are fired in a deterministic order (sorted by rule
+  id), so the system behaves the same way on every run.
 - **Facts vocabulary is shared across categories** (e.g. `computer_running`,
   `fans_running`, `post_screen_visible` are asked in multiple categories).
   Keep names consistent — avoid adding near-duplicates.
@@ -89,7 +87,7 @@ User -> Questionnaire -> facts -> WorkingMemory -> Forward-Chaining Engine <-> K
 - `README.md` — title, requirements, run instructions, architecture, example session
 - `docs/problem_analysis.md` — problem, target user, objectives (phase one)
 - `docs/knowledge_base.md` — fact categories, intermediate facts, diagnoses, all 34 rules, sources
-- `docs/inference_design.md` — why forward chaining, matching, agenda, fixed point, Mermaid diagram
+- `docs/inference_design.md` — why forward chaining, matching, firing order, fixed point, Mermaid diagram
 - `docs/testing_evaluation.md` — the 10 (+1) cases with expected vs actual
 - `docs/report_outline.md` — 15-section academic report template
 - `docs/BEGINNERS_GUIDE.md` — bilingual (EN/AR) beginner walkthrough; NOT part of submission
@@ -99,4 +97,4 @@ User -> Questionnaire -> facts -> WorkingMemory -> Forward-Chaining Engine <-> K
 
 11/11 cases PASS: power, display, boot, network, overheating, performance,
 storage, memory, peripheral, multiple-diagnoses (Performance + Storage), and
-insufficient-evidence (partial `cooling_problem`).
+insufficient-evidence (no diagnosis when evidence is partial).

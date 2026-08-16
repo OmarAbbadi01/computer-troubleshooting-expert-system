@@ -8,8 +8,8 @@ diagnoses with human-readable explanations.
 
 The project is an academic demonstration of classic expert-system concepts:
 knowledge base, facts / working memory, IF-THEN rules, forward chaining,
-rule priorities, intermediate inferred facts, explainable reasoning, and a
-clear separation between domain knowledge and inference logic.
+explainable reasoning, and a clear separation between domain knowledge and
+inference logic.
 
 ## Requirements
 
@@ -53,8 +53,6 @@ Reasoning:
 Recommendation:
   - Restart the router and modem. If the problem persists, contact your
     internet service provider.
-
-Show the detailed reasoning trace? (yes/no): yes
 ```
 
 ## Architecture
@@ -68,7 +66,7 @@ User -> Questionnaire -> Input Facts -> Working Memory -> Forward-Chaining Engin
 
 | Module | Responsibility |
 |--------|----------------|
-| `main.py` | CLI entry point: menu, questions, result and trace display |
+| `main.py` | CLI entry point: menu, questions, and result display |
 | `questionnaire.py` | Maps the selected problem to relevant questions, turns answers into facts |
 | `engine.py` | Generic forward-chaining inference engine (no domain knowledge) |
 | `knowledge_base.py` | Loads and validates the JSON knowledge base and questionnaire |
@@ -82,15 +80,13 @@ Key ideas:
 
 - **Knowledge is data, not code.** The 34 IF-THEN rules live in
   `data/knowledge_base.json`. The engine understands only generic concepts
-  (conditions, conclusions, priorities) and contains no computer-diagnostic
-  logic.
+  (conditions and conclusions) and contains no computer-diagnostic logic.
 - **Forward chaining.** The engine repeatedly finds satisfied rules, fires
-  them in priority order, and adds the inferred facts to working memory until
-  a fixed point is reached. Several diagnoses require multi-step chains such
-  as `facts -> cooling_problem -> Overheating problem`.
+  them in a deterministic order, and adds the inferred facts to working
+  memory until a fixed point is reached. Several diagnoses require multi-step
+  chains such as `facts -> cooling_problem -> Overheating problem`.
 - **Explanations.** Every rule carries a human-readable explanation and final
-  diagnoses carry safe recommendations. An optional detailed reasoning trace
-  shows the rules that fired and the facts each one inferred.
+  diagnoses carry safe recommendations.
 
 ## Documentation
 

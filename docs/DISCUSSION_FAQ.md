@@ -25,21 +25,20 @@ vocabulary, and they can be checked as rule conditions.
 ### Q3. Where is the knowledge base?
 
 In the file `data/knowledge_base.json`. It contains all 34 IF-THEN rules,
-the diagnosis names, the intermediate-fact labels, explanations,
-recommendations and priorities. It is data, not code.
+the diagnosis names, explanations and recommendations. It is data, not code.
 
 ### Q4. What is a rule?
 
 A rule is an IF-THEN statement. It has conditions (a list of facts that must
 be present) and conclusions (facts that become true when the conditions are
 satisfied). Example: `IF cooling_problem AND shuts_down_unexpectedly
-THEN diagnosis_overheating`. Each rule also has a human-readable explanation,
-an optional recommendation, and a numeric priority.
+THEN diagnosis_overheating`. Each rule also has a human-readable explanation
+and an optional recommendation.
 
 ### Q5. Where is the inference engine?
 
 In `engine.py` — the `InferenceEngine` class. It is completely generic: it
-understands concepts like conditions, conclusions and priorities, but it
+understands concepts like conditions and conclusions, but it
 contains no computer-troubleshooting logic. All domain knowledge is injected
 into it as `Rule` objects loaded from JSON.
 
@@ -57,13 +56,13 @@ cycle the engine re-checks every rule, so a newly added fact can make another
 rule's conditions true. Example: rule O1 infers `cooling_problem`, and that
 fact is what makes rule O3 applicable. That is multi-step forward chaining.
 
-### Q8. How are conflicting / simultaneously applicable rules handled?
+### Q8. How are simultaneously applicable rules handled?
 
-The engine builds an agenda of all applicable rules and sorts them by
-priority (highest first), with the rule ID as a deterministic tie-breaker.
-This is a lightweight conflict-resolution strategy. In this project
-conclusions are only added, never removed, so the order does not change the
-final answer — it mainly decides the firing order shown in the trace.
+The engine gathers all applicable rules and fires them in a deterministic
+order (sorted by rule ID), so the result is the same on every run. This is a
+simple, predictable strategy — no numeric priorities are used. Since
+conclusions are only added, never removed, the firing order does not change
+the final answer; it only affects the order of the explanation lines.
 
 ### Q9. Why is the knowledge base separate from the program logic?
 
@@ -76,8 +75,7 @@ core academic requirement of expert-system design.
 
 Every rule carries a plain-language `explanation`. When a diagnosis is
 produced, the program shows the explanation of the rule(s) that reached it,
-plus a recommendation. The user can also request a detailed trace showing
-every rule that fired, in order, with the facts each one added.
+plus a recommendation.
 
 ### Q11. How does the engine avoid infinite loops?
 
@@ -88,10 +86,9 @@ fixed point where no rule can produce anything new.
 
 ### Q12. What is working memory?
 
-The runtime state of a session. It stores the user's facts, the inferred
-facts, the union of both, and the ordered list of fired rules used for the
-trace. It exists only during a session and is represented by the
-`WorkingMemory` class.
+The runtime state of a session. It stores the current set of facts and the
+ordered list of fired rules used to build the explanation. It exists only
+during a session and is represented by the `WorkingMemory` class.
 
 ### Q13. Why only Yes/No questions?
 
@@ -108,10 +105,10 @@ single answer.
 
 ### Q15. What happens when there is not enough evidence?
 
-If no rule reaches a `diagnosis_*` fact, the program says the evidence is
-insufficient. It still shows any partial (intermediate) conclusions that were
-inferred — for example a "cooling problem" without unexpected shutdowns.
-This comes from actual inferred facts, not from guessing.
+If no rule reaches a `diagnosis_*` fact, the program says that no conclusion
+could be drawn from the answers given. This is the same "no solution" case a
+simple expert system produces when the evidence cannot satisfy any diagnosis
+rule.
 
 ### Q16. Why does it give broad diagnoses instead of the exact broken part?
 
@@ -127,12 +124,12 @@ boot/OS, performance, overheating, network, storage, memory, peripherals).
 About half infer intermediate facts and the rest turn evidence into final
 diagnoses, so several diagnoses require two or three inference steps.
 
-### Q18. What is the role of priorities?
+### Q18. What determines the order in which rules fire?
 
-A simple numeric field that orders the agenda when several rules are
-simultaneously applicable: higher priority fires first. It demonstrates that
-the engine has a basic conflict-resolution strategy. Diagnosis rules carry
-higher priorities (8–9) than intermediate rules (2–3).
+Applicable rules are sorted by rule ID, which makes the firing order fully
+deterministic — the same answers always produce the same session. Since facts
+are only added and never retracted, this order does not affect which
+diagnoses are reached, only the sequence of explanation lines.
 
 ### Q19. Why Python with only the standard library?
 
@@ -182,20 +179,19 @@ probabilities or certainty factors; and optionally build a small GUI.
 ### س3: أين توجد قاعدة المعرفة؟
 
 في الملف `data/knowledge_base.json`. يحتوي على جميع القواعد الـ34 من نوع
-"إذا-فإن"، وأسماء التشخيصات، وتسميات الحقائق الوسيطة، والشروح، والتوصيات،
-والأولويات. هي بيانات وليست كودًا.
+"إذا-فإن"، وأسماء التشخيصات، والشروح، والتوصيات. هي بيانات وليست كودًا.
 
 ### س4: ما هي القاعدة؟
 
 القاعدة عبارة عن جملة "إذا-فإن". لها شروط (قائمة حقائق يجب أن تكون موجودة)
 واستنتاجات (حقائق تصبح صحيحة عندما تتحقق الشروط). مثال: `إذا cooling_problem
 و shuts_down_unexpectedly فإن diagnosis_overheating`. لكل قاعدة أيضًا شرح
-مفهوم، وتوصية اختيارية، وأولوية رقمية.
+مفهوم وتوصية اختيارية.
 
 ### س5: أين يوجد محرك الاستدلال؟
 
 في `engine.py` — داخل كلاس `InferenceEngine`. وهو محرك عام تمامًا: يفهم
-مفاهيم مثل الشروط والاستنتاجات والأولويات، لكنه لا يحتوي أي منطق لتشخيص
+مفاهيم مثل الشروط والاستنتاجات، لكنه لا يحتوي أي منطق لتشخيص
 الأعطال. كل المعرفة تُحقن فيه ككائنات `Rule` محمّلة من ملف JSON.
 
 ### س6: لماذا الاستدلال الأمامي (Forward Chaining)؟
@@ -212,13 +208,13 @@ probabilities or certainty factors; and optionally build a small GUI.
 متحققة. مثال: القاعدة O1 تستنتج `cooling_problem`، وهذه الحقيقة هي ما
 يجعل القاعدة O3 قابلة للتفعيل. هذا هو الاستدلال الأمامي متعدد الخطوات.
 
-### س8: كيف تُعالج القواعد المتعارضة أو القابلة للتفعيل معًا؟
+### س8: كيف تُعالج القواعد القابلة للتفعيل معًا؟
 
-يبني المحرك جدول أعمال (agenda) بكل القواعد القابلة للتفعيل ويرتّبها حسب
-الأولوية (الأعلى أولًا)، مع استخدام معرّف القاعدة لكسر التعادل بشكل
-حتمي. هذه استراتيجية خفيفة لحل النزاعات. في هذا المشروع تُضاف الاستنتاجات
-فقط ولا تُحذف، لذلك لا يغيّر الترتيب الإجابة النهائية — بل يحدد ترتيب
-التفعيل الظاهر في الأثر.
+يجمع المحرك كل القواعد القابلة للتفعيل وينفّذها بترتيب حتمي (مفرَّزة حسب
+معرّف القاعدة)، فتكون النتيجة نفسها في كل تشغيل. هذه استراتيجية بسيطة
+ومتوقعة — لا تُستخدم أولويات رقمية. وبما أن الاستنتاجات تُضاف فقط ولا
+تُحذف، فإن الترتيب لا يغيّر الإجابة النهائية — بل يحدد فقط ترتيب سطور
+الشرح.
 
 ### س9: لماذا فصل قاعدة المعرفة عن منطق البرنامج؟
 
@@ -229,8 +225,7 @@ probabilities or certainty factors; and optionally build a small GUI.
 ### س10: كيف يشرح النظام نتيجته؟
 
 تحمل كل قاعدة حقل `explanation` بلغة بسيطة. عندما يُنتج تشخيص، يعرض
-البرنامج شرح القاعدة (أو القواعد) التي وصلت إليه، مع توصية. ويمكن للمستخدم
-طلب أثر تفصيلي يعرض كل قاعدة تم تفعيلها بالترتيب مع الحقائق التي أضافتها.
+البرنامج شرح القاعدة (أو القواعد) التي وصلت إليه، مع توصية.
 
 ### س11: كيف يتجنب المحرك الحلقات اللانهائية؟
 
@@ -241,9 +236,9 @@ probabilities or certainty factors; and optionally build a small GUI.
 
 ### س12: ما هي الذاكرة العاملة؟
 
-هي الحالة الزمنية للجلسة. تخزّن حقائق المستخدم، والحقائق المستنتَجة، ومجموعهما
-معًا، وقائمة القواعد المُفعَّلة بالترتيب (لأجل الأثر). توجد فقط أثناء الجلسة
-ويمثلها كلاس `WorkingMemory`.
+هي الحالة الزمنية للجلسة. تخزّن مجموعة الحقائق الحالية، وقائمة القواعد
+المُفعَّلة بالترتيب (لأجل بناء الشرح). توجد فقط أثناء الجلسة ويمثلها كلاس
+`WorkingMemory`.
 
 ### س13: لماذا أسئلة نعم/لا فقط؟
 
@@ -258,10 +253,10 @@ probabilities or certainty factors; and optionally build a small GUI.
 
 ### س15: ماذا يحدث عندما لا تكفي الأدلة؟
 
-إذا لم تصل أي قاعدة إلى حقيقة من نوع `diagnosis_*`، يقول البرنامج إن الأدلة
-غير كافية، لكنه ما زال يعرض أي استنتاجات جزئية (وسيطة) تم استنتاجها — مثل
-"مشكلة تبريد" دون حدوث إيقاف مفاجئ. هذا يأتي من حقائق مستنتَجة فعلية وليس
-من التخمين.
+إذا لم تصل أي قاعدة إلى حقيقة من نوع `diagnosis_*`، يقول البرنامج إنه لا يمكن
+استخلاص أي استنتاج من الإجابات المعطاة. هذه هي نفس حالة "لا يوجد حل"
+(no solution) التي يعرضها النظام الخبير البسيط عندما لا تتحقق أي قاعدة
+تشخيص.
 
 ### س16: لماذا تشخيصات عامة بدلًا من تحديد الجزء المعطوب بدقة؟
 
@@ -276,11 +271,12 @@ probabilities or certainty factors; and optionally build a small GUI.
 يستنتج حقائق وسيطة والباقي يحوّل الأدلة إلى تشخيصات نهائية، لذلك تتطلب عدة
 تشخيصات خطوتين أو ثلاث خطوات استدلال.
 
-### س18: ما دور الأولويات؟
+### س18: ما الذي يحدد ترتيب تفعيل القواعد؟
 
-حقل رقمي بسيط يحدد ترتيب جدول الأعمال عندما تكون عدة قواعد قابلة للتفعيل معًا:
-الأولوية الأعلى تُفعَّل أولًا. يوضح أن المحرك يملك استراتيجية أساسية لحل
-النزاعات. قواعد التشخيص تحمل أولوية أعلى (8–9) من القواعد الوسيطة (2–3).
+تُفرز القواعد القابلة للتفعيل حسب معرّف القاعدة، فيكون ترتيب التفعيل
+حتميًا تمامًا — نفس الإجابات تُنتج دائمًا نفس الجلسة. وبما أن الحقائق
+تُضاف فقط ولا تُحذف، فإن هذا الترتيب لا يؤثر على التشخيصات الناتجة، بل
+يحدد فقط تسلسل سطور الشرح.
 
 ### س19: لماذا بايثون مع المكتبة القياسية فقط؟
 

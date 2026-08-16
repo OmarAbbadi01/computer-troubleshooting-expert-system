@@ -1,9 +1,9 @@
 """Loads and validates the JSON knowledge base and the questionnaire.
 
-The knowledge base (rules, diagnosis names, intermediate-fact labels) is
-domain knowledge and is kept completely separate from the inference
-engine. Loading performs simple validation so that a malformed file
-fails with a readable error instead of crashing later.
+The knowledge base (rules and diagnosis names) is domain knowledge and is
+kept completely separate from the inference engine. Loading performs simple
+validation so that a malformed file fails with a readable error instead of
+crashing later.
 """
 
 from __future__ import annotations
@@ -43,18 +43,14 @@ def load_diagnoses(path) -> Dict[str, dict]:
     diagnoses = data.get("diagnoses", {})
     if not isinstance(diagnoses, dict):
         raise ValueError(f"Knowledge base error in {path}: 'diagnoses' must be an object.")
+    for did, raw in diagnoses.items():
+        if not isinstance(raw, dict):
+            raise ValueError(f"Knowledge base error in {path}: diagnosis '{did}' must be an object.")
+        _bilingual(raw.get("name"), path, f"diagnosis '{did}' 'name'")
+        default = raw.get("default_recommendation")
+        if default is not None:
+            _bilingual(default, path, f"diagnosis '{did}' 'default_recommendation'")
     return diagnoses
-
-
-def load_intermediate_labels(path) -> Dict[str, str]:
-    """Load human-readable labels for intermediate facts."""
-    data = _read_json(path)
-    labels = data.get("intermediate_facts", {})
-    if not isinstance(labels, dict):
-        raise ValueError(
-            f"Knowledge base error in {path}: 'intermediate_facts' must be an object."
-        )
-    return labels
 
 
 def load_questionnaire(path) -> Tuple[List[MainProblem], Dict[str, Question]]:
@@ -74,13 +70,11 @@ def load_questionnaire(path) -> Tuple[List[MainProblem], Dict[str, Question]]:
             )
         questions[qid] = Question(
             id=qid,
-            text=str(raw.get("text", "")),
+            text=_bilingual(raw.get("text"), path, f"question '{qid}' 'text'"),
             yes_fact=raw.get("yes_fact"),
             no_fact=raw.get("no_fact"),
             laptop_only=bool(raw.get("laptop_only", False)),
         )
-        if not questions[qid].text:
-            raise ValueError(f"Questionnaire error in {path}: question '{qid}' has no text.")
         if not questions[qid].yes_fact and not questions[qid].no_fact:
             raise ValueError(
                 f"Questionnaire error in {path}: question '{qid}' produces no facts."
@@ -92,23 +86,25 @@ def load_questionnaire(path) -> Tuple[List[MainProblem], Dict[str, Question]]:
             raise ValueError(
                 f"Questionnaire error in {path}: main problem #{index + 1} must be an object."
             )
+        problem_id = str(raw.get("id", ""))
+        if not problem_id:
+            raise ValueError(
+                f"Questionnaire error in {path}: main problem #{index + 1} has no 'id'."
+            )
         qids = raw.get("questions", [])
         for qid in qids:
             if qid not in questions:
                 raise ValueError(
-                    f"Questionnaire error in {path}: problem '{raw.get('id')}' "
+                    f"Questionnaire error in {path}: problem '{problem_id}' "
                     f"references unknown question '{qid}'."
                 )
         problems.append(
             MainProblem(
-                id=str(raw.get("id", "")),
-                label=str(raw.get("label", "")),
+                id=problem_id,
+                label=_bilingual(raw.get("label"), path, f"problem '{problem_id}' 'label'"),
                 question_ids=list(qids),
             )
         )
-
-    if not all(p.id and p.label for p in problems):
-        raise ValueError(f"Questionnaire error in {path}: every problem needs 'id' and 'label'.")
 
     return problems, questions
 
@@ -120,12 +116,11 @@ def _parse_rule(raw: JsonValue, index: int, path) -> Rule:
         )
 
     rule_id = raw.get("id", "")
-    conditions = raw.get("conditions")
-    conclusions = raw.get("conclusions")
-    explanation = raw.get("explanation", "")
-
     if not rule_id:
         raise ValueError(f"Knowledge base error in {path}: rule #{index + 1} has no 'id'.")
+    conditions = raw.get("conditions")
+    conclusions = raw.get("conclusions")
+
     if not isinstance(conditions, list) or not conditions:
         raise ValueError(
             f"Knowledge base error in {path}: rule '{rule_id}' must have non-empty 'conditions'."
@@ -134,31 +129,36 @@ def _parse_rule(raw: JsonValue, index: int, path) -> Rule:
         raise ValueError(
             f"Knowledge base error in {path}: rule '{rule_id}' must have non-empty 'conclusions'."
         )
-    if not explanation:
-        raise ValueError(
-            f"Knowledge base error in {path}: rule '{rule_id}' must have an 'explanation'."
-        )
 
-    priority = raw.get("priority", 0)
-    if not isinstance(priority, int) or isinstance(priority, bool):
-        raise ValueError(
-            f"Knowledge base error in {path}: rule '{rule_id}' has an invalid 'priority'."
-        )
-
+    explanation = _bilingual(raw.get("explanation"), path, f"rule '{rule_id}' 'explanation'")
     recommendation = raw.get("recommendation")
-    if recommendation is not None and not isinstance(recommendation, str):
-        raise ValueError(
-            f"Knowledge base error in {path}: rule '{rule_id}' has an invalid 'recommendation'."
-        )
+    if recommendation is not None:
+        recommendation = _bilingual(recommendation, path, f"rule '{rule_id}' 'recommendation'")
 
     return Rule(
         id=rule_id,
         conditions=[str(c) for c in conditions],
         conclusions=[str(c) for c in conclusions],
         explanation=explanation,
-        priority=priority,
         recommendation=recommendation,
     )
+
+
+def _bilingual(value: JsonValue, path, where: str) -> Dict[str, str]:
+    """Validate a bilingual text object: a dict with non-empty 'en' and 'ar'."""
+    if not isinstance(value, dict):
+        raise ValueError(
+            f"Data file {path}: {where} must be an object with 'en' and 'ar' texts."
+        )
+    result: Dict[str, str] = {}
+    for lang in ("en", "ar"):
+        part = value.get(lang, "")
+        if not isinstance(part, str) or not part.strip():
+            raise ValueError(
+                f"Data file {path}: {where} is missing a non-empty '{lang}' text."
+            )
+        result[lang] = part
+    return result
 
 
 def _read_json(path) -> dict:

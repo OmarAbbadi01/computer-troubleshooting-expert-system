@@ -75,10 +75,8 @@ You            → Questionnaire → Facts → Inference Engine → Diagnoses
    facts. It repeats this until nothing new can be inferred.
 6. Facts starting with `diagnosis_` are the **final diagnoses**. They are
    displayed with their human-readable explanation and recommendation.
-7. If no diagnosis is reached, the program says the evidence is **insufficient**
-   and shows any partial conclusions.
-8. You can optionally view a **detailed reasoning trace** — every rule that
-   fired, in order.
+7. If no diagnosis is reached, the program says **no conclusion** could be
+   drawn from the answers given.
 
 ### Example walkthrough
 
@@ -134,7 +132,6 @@ Then:
 2. Choose your main problem (1–9).
 3. Answer each question with `yes` / `no` (or `y` / `n`).
 4. Read the diagnosis, reasoning and recommendation.
-5. Answer `yes` if you want to see the detailed reasoning trace.
 
 ### Run the evaluation cases automatically
 
@@ -263,9 +260,8 @@ JSON — ولا تلمس المحرك أبدًا.
    حتى لا يمكن استنتاج شيء جديد.
 6. الحقائق التي تبدأ بـ `diagnosis_` هي **التشخيصات النهائية**، وتُعرض مع
    شرحها وتوصيتها.
-7. إذا لم يصل النظام إلى تشخيص، يقول إن الأدلة **غير كافية** ويعرض الاستنتاجات
-   الجزئية إن وجدت.
-8. يمكنك اختياريًا عرض **أثر التفكير التفصيلي** — كل قاعدة تم تفعيلها بالترتيب.
+7. إذا لم يصل النظام إلى تشخيص، يقول إنه لا يمكن استخلاص أي استنتاج من
+   الإجابات المعطاة.
 
 ### مثال توضيحي
 
@@ -319,7 +315,6 @@ python3 main.py
 2. اختر مشكلتك الرئيسية (1–9).
 3. أجب عن كل سؤال بـ `yes` / `no` (أو `y` / `n`).
 4. اقرأ التشخيص والشرح والتوصية.
-5. أجب بـ `yes` إذا أردت رؤية أثر التفكير التفصيلي.
 
 ### تشغيل حالات الاختبار تلقائيًا
 

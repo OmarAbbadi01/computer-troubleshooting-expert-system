@@ -169,7 +169,6 @@ CASES = [
             "q_fan_noise": False,
         },
         "expected": [],
-        "expected_partial": ["Cooling problem exists"],
-        "notes": "Cooling problem inferred but no unexpected shutdown, so no final diagnosis.",
+        "notes": "Cooling problem is inferred but no unexpected shutdown, so no final diagnosis.",
     },
 ]

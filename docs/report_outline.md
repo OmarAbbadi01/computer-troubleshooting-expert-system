@@ -22,7 +22,7 @@ repository.
      diagnoses. See `docs/knowledge_base.md`.
 
 5. **Knowledge Representation**
-   - Facts, IF-THEN rules with explanations and priorities, JSON storage,
+   - Facts, IF-THEN rules with explanations, JSON storage,
      separation of knowledge from mechanism.
 
 6. **System Architecture**
@@ -30,7 +30,7 @@ repository.
    - Diagram from `docs/inference_design.md`.
 
 7. **Forward-Chaining Mechanism**
-   - Rule matching, agenda/priority, firing, fixed-point termination,
+   - Rule matching, firing order, fixed-point termination,
      multiple diagnoses, explanation tracking. See `docs/inference_design.md`.
 
 8. **Implementation**
@@ -39,8 +39,8 @@ repository.
    - Why plain Python and the standard library were sufficient.
 
 9. **User Interface**
-   - Menu-driven CLI, Yes/No questions, result display, optional detailed
-     trace. Include a screenshot of a full session.
+   - Menu-driven CLI, Yes/No questions, result display. Include a screenshot
+     of a full session.
 
 10. **Testing and Evaluation**
     - The 10 evaluation cases, expected vs actual results.
@@ -64,5 +64,4 @@ repository.
       material (see `problem_analysis.md` for source types).
 
 15. **Screenshots**
-    - Main menu, question flow, diagnosis + explanation, detailed reasoning
-      trace, evaluation run.
+    - Main menu, question flow, diagnosis + explanation, evaluation run.

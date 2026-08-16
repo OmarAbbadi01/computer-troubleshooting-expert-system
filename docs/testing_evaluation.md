@@ -31,7 +31,7 @@ actual results. All cases passed.
 | 8 | Memory | Memory-related problem | Memory problem | Memory problem | PASS | Two-step chain: facts → `memory_pressure` → Memory problem |
 | 9 | Peripheral | Peripheral/device is not working | Peripheral/device problem | Peripheral/device problem | PASS | Single-step rule (device itself faulty) |
 | 10 | Multiple diagnoses | Computer is slow | Performance problem **and** Storage problem | Performance problem **and** Storage problem | PASS | Two independent chains fire in one session |
-| 11 | Insufficient evidence | Computer gets hot or shuts down | No final diagnosis; partial "Cooling problem exists" | No final diagnosis; partial "Cooling problem exists" | PASS | `cooling_problem` inferred but no unexpected shutdown |
+| 11 | Insufficient evidence | Computer gets hot or shuts down | No final diagnosis | none | PASS | `cooling_problem` inferred but no unexpected shutdown |
 
 ### Notes on coverage
 
@@ -40,9 +40,9 @@ actual results. All cases passed.
   problem through two independent forward-chaining chains.
 - **Multi-step chaining:** cases 1–8 and 10 all demonstrate at least one
   two-step chain; case 6 demonstrates a three-step chain.
-- **Insufficient evidence:** case 11 — the engine infers a partial conclusion
-  (cooling problem) but reports that there is not enough evidence for a final
-  diagnosis.
+- **Insufficient evidence:** case 11 — the engine infers `cooling_problem`
+  but no final diagnosis, so the system reports that no conclusion could be
+  drawn.
 - **Laptop adaptation:** the external-monitor question is only asked for
   laptops; desktop sessions skip it (verified separately in case 2, where the
   question is not asked).

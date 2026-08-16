@@ -113,9 +113,9 @@ demonstrate real chaining:
   turn intermediate (or direct) evidence into final diagnoses. Several
   diagnoses require two inference steps (e.g., Power, Display, Overheating)
   and one requires three steps (startup overload).
-- **Priorities:** diagnosis rules carry a higher priority (8–9) than
-  intermediate rules (2–3) so that, when several rules are eligible at once,
-  the agenda order is meaningful.
+- **Firing order:** rules fire in deterministic rule-ID order; no priorities
+  are used — the order only affects which intermediate facts appear first in
+  the explanation, not which conclusions are reached.
 - **Multiple conclusions:** rules are not contradictory; different rules may
   reach the same diagnosis from different evidence, and several independent
   chains may fire in one session (producing multiple diagnoses).

@@ -11,10 +11,9 @@ the explanation requirement: every intermediate step can be shown.
 
 `WorkingMemory` (in `engine.py`) stores:
 
-- `user_facts` — facts provided by the user's answers,
-- `inferred_facts` — facts derived by fired rules,
-- `facts` — the union of both (the current state),
-- `fired_rules` — an ordered trace of every rule firing.
+- `facts` — the current set of known facts (from answers and fired rules),
+- `fired_rules` — an ordered record of every rule firing, used to build the
+  plain-language explanation.
 
 ## Rule matching
 
@@ -26,18 +25,18 @@ applicable = [r for r in rules
               if all(c in memory.facts for c in r.conditions)]
 ```
 
-## Rule firing (agenda / conflict resolution)
+## Rule firing (deterministic order)
 
-Applicable rules are sorted so that **higher priority fires first**; the rule
-ID breaks ties for determinism:
+Applicable rules are sorted by rule ID so the system behaves identically on
+every run:
 
 ```python
-applicable.sort(key=lambda r: (-r.priority, r.id))
+applicable.sort(key=lambda r: r.id)
 ```
 
-Firing a rule adds its conclusions to working memory, records them as inferred
-facts, and appends a `FiredRule` entry to the trace. A rule whose conclusions
-are already present is skipped, which prevents pointless repeated firing.
+Firing a rule adds its conclusions to working memory and appends a `FiredRule`
+record. A rule whose conclusions are already present is skipped, which prevents
+pointless repeated firing.
 
 ## Fixed-point termination
 
@@ -82,16 +81,16 @@ produces both a Performance problem and a Storage problem.
 
 ## Insufficient evidence
 
-If no rule reaches a `diagnosis_*` fact, the system reports that the evidence
-is insufficient. Intermediate facts that *were* inferred are still shown as
-partial conclusions (e.g., a "cooling problem" without unexpected shutdowns).
+If no rule reaches a `diagnosis_*` fact, the system simply reports that no
+conclusion could be drawn from the answers given (like the "no solution" case
+in the PROLOG examples).
 
 ## Explanation tracking
 
 Each fired rule is recorded with the facts it added. The presentation layer
 uses the human-readable `explanation` attached to the rule that produced a
 diagnosis, so the user sees plain-language reasoning instead of internal rule
-IDs (rule IDs appear only in the optional detailed trace).
+IDs.
 
 ## Inference diagram
 

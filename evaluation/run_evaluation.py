@@ -17,7 +17,7 @@ sys.path.insert(0, os.path.dirname(_HERE))  # to import project modules
 
 from cases import CASES
 
-from knowledge_base import load_diagnoses, load_intermediate_labels, load_questionnaire, load_rules
+from knowledge_base import load_diagnoses, load_questionnaire, load_rules
 from questionnaire import Questionnaire
 from engine import InferenceEngine
 
@@ -29,7 +29,6 @@ QUESTIONS_FILE = os.path.join(BASE_DIR, "data", "questions.json")
 def main() -> None:
     rules = load_rules(KNOWLEDGE_BASE_FILE)
     diagnoses = load_diagnoses(KNOWLEDGE_BASE_FILE)
-    intermediate_labels = load_intermediate_labels(KNOWLEDGE_BASE_FILE)
     problems, questions = load_questionnaire(QUESTIONS_FILE)
     questionnaire = Questionnaire(problems, questions)
     engine = InferenceEngine(rules)
@@ -45,17 +44,11 @@ def main() -> None:
         memory = engine.run(facts)
 
         actual_names = sorted(
-            diagnoses.get(d, {}).get("name", d) for d in memory.facts if d.startswith("diagnosis_")
+            diagnoses.get(d, {}).get("name", {}).get("en", d)
+            for d in memory.facts if d.startswith("diagnosis_")
         )
         expected_names = sorted(case["expected"])
         ok = actual_names == expected_names
-
-        if not ok and case.get("expected_partial"):
-            actual_partial = [
-                intermediate_labels.get(f, f) for f in memory.inferred_facts
-                if not f.startswith("diagnosis_")
-            ]
-            ok = actual_names == [] and sorted(actual_partial) == sorted(case["expected_partial"])
 
         passed += 1 if ok else 0
         print(

@@ -9,26 +9,32 @@ from __future__ import annotations
 
 from typing import Dict, List, Optional
 
+from bilingual import render
 from models import MainProblem, Question
 
 
 class Questionnaire:
     """Asks the relevant questions and converts answers into facts."""
 
-    def __init__(self, problems: List[MainProblem], questions: Dict[str, Question]) -> None:
+    def __init__(self, problems: List[MainProblem], questions: Dict[str, Question],
+                 lang: str = "en") -> None:
         self.problems = problems
         self.questions = questions
+        self.lang = lang
 
     def choose_problem(self, choice_text: Optional[str] = None) -> MainProblem:
         """Select a main problem by number (used by the CLI)."""
         if choice_text is None:
-            choice_text = input("Enter your choice (1-9): ").strip()
+            prompt = "أدخل اختيارك (1-9): " if self.lang == "ar" else "Enter your choice (1-9): "
+            choice_text = input(prompt).strip()
         try:
             index = int(choice_text) - 1
             if 0 <= index < len(self.problems):
                 return self.problems[index]
         except ValueError:
             pass
+        if self.lang == "ar":
+            raise ValueError(f"'{choice_text}' ليس رقماً صحيحاً لمشكلة.")
         raise ValueError(f"'{choice_text}' is not a valid problem number.")
 
     def collect_facts(
@@ -66,10 +72,13 @@ class Questionnaire:
         if answers is not None:
             return answers.get(question.id)
 
+        prompt = "(نعم/لا): " if self.lang == "ar" else "(yes/no): "
+        message = "يرجى الإجابة بنعم أو لا." if self.lang == "ar" else "Please answer 'yes' or 'no'."
         while True:
-            raw = input(f"{question.text} (yes/no): ").strip().lower()
-            if raw in ("y", "yes"):
+            print(render(question.text, self.lang))
+            raw = input(prompt).strip().lower()
+            if raw in ("y", "yes", "نعم", "ن"):
                 return True
-            if raw in ("n", "no"):
+            if raw in ("n", "no", "لا", "ل"):
                 return False
-            print("Please answer 'yes' or 'no'.")
+            print(message)

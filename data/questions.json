@@ -2,224 +2,356 @@
   "main_problems": [
     {
       "id": "power_off",
-      "label": "Computer does not turn on",
+      "label": {
+        "en": "Computer does not turn on",
+        "ar": "لا يعمل الحاسوب"
+      },
       "questions": ["q_power_led", "q_fans", "q_power_cable", "q_outlet"]
     },
     {
       "id": "blank_screen",
-      "label": "Computer turns on but the screen is blank",
+      "label": {
+        "en": "Computer turns on but the screen is blank",
+        "ar": "يعمل الحاسوب لكن الشاشة فارغة"
+      },
       "questions": ["q_computer_running", "q_screen_blank", "q_post_screen", "q_external_monitor"]
     },
     {
       "id": "boot_problem",
-      "label": "Computer does not boot properly",
+      "label": {
+        "en": "Computer does not boot properly",
+        "ar": "لا يُقلع الحاسوب بشكل صحيح"
+      },
       "questions": ["q_computer_running", "q_post_screen", "q_os_loading_screen", "q_bsod"]
     },
     {
       "id": "slow",
-      "label": "Computer is slow",
+      "label": {
+        "en": "Computer is slow",
+        "ar": "الحاسوب بطيء"
+      },
       "questions": ["q_os_load_time", "q_program_launch", "q_disk_nearly_full", "q_disk_activity", "q_startup_programs"]
     },
     {
       "id": "overheating",
-      "label": "Computer gets hot or shuts down",
+      "label": {
+        "en": "Computer gets hot or shuts down",
+        "ar": "يسخن الحاسوب أو ينطفئ فجأة"
+      },
       "questions": ["q_computer_running", "q_computer_hot", "q_shutdown", "q_fans", "q_vent_blocked", "q_fan_noise"]
     },
     {
       "id": "network",
-      "label": "Internet/network is not working",
+      "label": {
+        "en": "Internet/network is not working",
+        "ar": "الإنترنت/الشبكة لا تعمل"
+      },
       "questions": ["q_wifi_connected", "q_networks_visible", "q_router_reachable", "q_internet", "q_other_devices", "q_ip_address"]
     },
     {
       "id": "storage",
-      "label": "Storage-related problem",
+      "label": {
+        "en": "Storage-related problem",
+        "ar": "مشكلة في التخزين"
+      },
       "questions": ["q_disk_nearly_full", "q_disk_activity", "q_disk_errors", "q_files_corrupt"]
     },
     {
       "id": "memory",
-      "label": "Memory-related problem",
+      "label": {
+        "en": "Memory-related problem",
+        "ar": "مشكلة في الذاكرة"
+      },
       "questions": ["q_ram_usage", "q_freezes", "q_app_crashes", "q_ram_detected"]
     },
     {
       "id": "peripheral",
-      "label": "Peripheral/device is not working",
+      "label": {
+        "en": "Peripheral/device is not working",
+        "ar": "الملحق/الجهاز الطرفي لا يعمل"
+      },
       "questions": ["q_device_detected", "q_device_other_port", "q_device_other_computer", "q_driver"]
     }
   ],
   "questions": {
     "q_power_led": {
-      "text": "When you press the power button, does the power LED light up?",
+      "text": {
+        "en": "When you press the power button, does the power LED light up?",
+        "ar": "عند الضغط على زر الطاقة، هل يضيء مؤشر الطاقة؟"
+      },
       "yes_fact": "power_led_on",
       "no_fact": "power_led_off"
     },
     "q_fans": {
-      "text": "When the computer is switched on, do the fans spin (or do you hear the machine humming)?",
+      "text": {
+        "en": "When the computer is switched on, do the fans spin (or do you hear the machine humming)?",
+        "ar": "عند تشغيل الحاسوب، هل تدور المروحات (أو تسمع صوت هدير الجهاز)؟"
+      },
       "yes_fact": "fans_running",
       "no_fact": "fans_not_running"
     },
     "q_power_cable": {
-      "text": "Is the power cable connected firmly to both the computer and the wall socket?",
+      "text": {
+        "en": "Is the power cable connected firmly to both the computer and the wall socket?",
+        "ar": "هل كابل الطاقة موصول بإحكام بالحاسوب وبمقبس الحائط معاً؟"
+      },
       "yes_fact": "power_cable_ok",
       "no_fact": "power_cable_loose"
     },
     "q_outlet": {
-      "text": "Does the wall socket supply power to other devices correctly?",
+      "text": {
+        "en": "Does the wall socket supply power to other devices correctly?",
+        "ar": "هل يزود مقبس الحائط الأجهزة الأخرى بالكهرباء بشكل صحيح؟"
+      },
       "yes_fact": "outlet_power_ok",
       "no_fact": "outlet_power_fails"
     },
     "q_computer_running": {
-      "text": "Does the computer switch on and stay running (lights and fans active)?",
+      "text": {
+        "en": "Does the computer switch on and stay running (lights and fans active)?",
+        "ar": "هل يعمل الحاسوب ويستمر في العمل (الأضواء والمروحات نشطة)؟"
+      },
       "yes_fact": "computer_running",
       "no_fact": "computer_not_running"
     },
     "q_screen_blank": {
-      "text": "Is the screen completely blank (no picture at all)?",
+      "text": {
+        "en": "Is the screen completely blank (no picture at all)?",
+        "ar": "هل الشاشة فارغة تماماً (لا توجد أي صورة)؟"
+      },
       "yes_fact": "screen_blank",
       "no_fact": "screen_has_image"
     },
     "q_post_screen": {
-      "text": "At startup, do you briefly see the manufacturer logo or the BIOS screen?",
+      "text": {
+        "en": "At startup, do you briefly see the manufacturer logo or the BIOS screen?",
+        "ar": "عند بدء التشغيل، هل ترى شعار الشركة المصنعة أو شاشة BIOS لفترة وجيزة؟"
+      },
       "yes_fact": "post_screen_visible",
       "no_fact": "post_screen_blank"
     },
     "q_external_monitor": {
-      "text": "If you connect an external monitor, does it show a picture?",
+      "text": {
+        "en": "If you connect an external monitor, does it show a picture?",
+        "ar": "إذا وصّلت شاشة خارجية، فهل تعرض صورة؟"
+      },
       "yes_fact": "external_monitor_works",
       "no_fact": "external_monitor_blank",
       "laptop_only": true
     },
     "q_os_loading_screen": {
-      "text": "After the logo screen, does the operating system loading screen appear (e.g., the Windows logo)?",
+      "text": {
+        "en": "After the logo screen, does the operating system loading screen appear (e.g., the Windows logo)?",
+        "ar": "بعد شاشة الشعار، هل تظهر شاشة تحميل نظام التشغيل (مثل شعار Windows)؟"
+      },
       "yes_fact": "os_loading_screen_visible",
       "no_fact": "os_loading_screen_absent"
     },
     "q_bsod": {
-      "text": "Does the computer show a blue or black error screen while starting?",
+      "text": {
+        "en": "Does the computer show a blue or black error screen while starting?",
+        "ar": "هل يعرض الحاسوب شاشة خطأ زرقاء أو سوداء أثناء بدء التشغيل؟"
+      },
       "yes_fact": "bsod_occurs",
       "no_fact": "no_bsod"
     },
     "q_os_load_time": {
-      "text": "Does the operating system take a long time to start?",
+      "text": {
+        "en": "Does the operating system take a long time to start?",
+        "ar": "هل يستغرق نظام التشغيل وقتاً طويلاً في بدء التشغيل؟"
+      },
       "yes_fact": "os_loads_slowly",
       "no_fact": "os_loads_normal"
     },
     "q_program_launch": {
-      "text": "Do programs take a long time to open?",
+      "text": {
+        "en": "Do programs take a long time to open?",
+        "ar": "هل تستغرق البرامج وقتاً طويلاً لفتحها؟"
+      },
       "yes_fact": "programs_launch_slowly",
       "no_fact": "programs_launch_normal"
     },
     "q_disk_nearly_full": {
-      "text": "Is the hard disk almost full?",
+      "text": {
+        "en": "Is the hard disk almost full?",
+        "ar": "هل القرص الصلب ممتلئ تقريباً؟"
+      },
       "yes_fact": "disk_nearly_full",
       "no_fact": "disk_has_space"
     },
     "q_startup_programs": {
-      "text": "Do many programs start automatically when the computer starts?",
+      "text": {
+        "en": "Do many programs start automatically when the computer starts?",
+        "ar": "هل تبدأ العديد من البرامج تلقائياً عند تشغيل الحاسوب؟"
+      },
       "yes_fact": "many_startup_programs",
       "no_fact": "few_startup_programs"
     },
     "q_computer_hot": {
-      "text": "Does the computer become unusually hot?",
+      "text": {
+        "en": "Does the computer become unusually hot?",
+        "ar": "هل يسخن الحاسوب بشكل غير طبيعي؟"
+      },
       "yes_fact": "computer_hot",
       "no_fact": "computer_cool"
     },
     "q_shutdown": {
-      "text": "Does the computer shut down unexpectedly on its own?",
+      "text": {
+        "en": "Does the computer shut down unexpectedly on its own?",
+        "ar": "هل ينطفئ الحاسوب فجأة من تلقاء نفسه؟"
+      },
       "yes_fact": "shuts_down_unexpectedly",
       "no_fact": "shuts_down_normally"
     },
     "q_vent_blocked": {
-      "text": "Are the ventilation openings blocked or covered?",
+      "text": {
+        "en": "Are the ventilation openings blocked or covered?",
+        "ar": "هل فتحات التهوية مسدودة أو مغطاة؟"
+      },
       "yes_fact": "vents_blocked",
       "no_fact": "vents_clear"
     },
     "q_fan_noise": {
-      "text": "Is the cooling fan unusually loud?",
+      "text": {
+        "en": "Is the cooling fan unusually loud?",
+        "ar": "هل مروحة التبريد صاخبة بشكل غير طبيعي؟"
+      },
       "yes_fact": "fan_unusually_noisy",
       "no_fact": "fan_quiet_normal"
     },
     "q_wifi_connected": {
-      "text": "Is the computer connected to Wi-Fi?",
+      "text": {
+        "en": "Is the computer connected to Wi-Fi?",
+        "ar": "هل الحاسوب متصل بشبكة Wi-Fi؟"
+      },
       "yes_fact": "wifi_connected",
       "no_fact": "wifi_disconnected"
     },
     "q_networks_visible": {
-      "text": "Does the computer find any available Wi-Fi networks?",
+      "text": {
+        "en": "Does the computer find any available Wi-Fi networks?",
+        "ar": "هل يجد الحاسوب أي شبكات Wi-Fi متاحة؟"
+      },
       "yes_fact": "wifi_shows_networks",
       "no_fact": "wifi_no_networks"
     },
     "q_router_reachable": {
-      "text": "Can the computer communicate with the router (the local network)?",
+      "text": {
+        "en": "Can the computer communicate with the router (the local network)?",
+        "ar": "هل يمكن للحاسوب الاتصال بجهاز التوجيه (الشبكة المحلية)؟"
+      },
       "yes_fact": "router_reachable",
       "no_fact": "router_unreachable"
     },
     "q_internet": {
-      "text": "Can you open websites or reach the internet?",
+      "text": {
+        "en": "Can you open websites or reach the internet?",
+        "ar": "هل يمكنك فتح المواقع أو الوصول إلى الإنترنت؟"
+      },
       "yes_fact": "internet_reachable",
       "no_fact": "internet_unreachable"
     },
     "q_other_devices": {
-      "text": "Do other devices on the same network also have no internet access?",
+      "text": {
+        "en": "Do other devices on the same network also have no internet access?",
+        "ar": "هل الأجهزة الأخرى على نفس الشبكة بلا وصول للإنترنت أيضاً؟"
+      },
       "yes_fact": "other_devices_offline",
       "no_fact": "other_devices_online"
     },
     "q_ip_address": {
-      "text": "Does the computer obtain a valid IP address (not starting with 169.254)?",
+      "text": {
+        "en": "Does the computer obtain a valid IP address (not starting with 169.254)?",
+        "ar": "هل يحصل الحاسوب على عنوان IP صالح (لا يبدأ بـ 169.254)؟"
+      },
       "yes_fact": "ip_address_assigned",
       "no_fact": "ip_address_missing"
     },
     "q_disk_activity": {
-      "text": "Is the disk constantly busy at high (100%) activity for long periods?",
+      "text": {
+        "en": "Is the disk constantly busy at high (100%) activity for long periods?",
+        "ar": "هل القرص مشغول باستمرار بنشاط مرتفع (100%) لفترات طويلة؟"
+      },
       "yes_fact": "disk_activity_high",
       "no_fact": "disk_activity_normal"
     },
     "q_disk_errors": {
-      "text": "Does the system report disk errors?",
+      "text": {
+        "en": "Does the system report disk errors?",
+        "ar": "هل يبلغ النظام عن أخطاء في القرص؟"
+      },
       "yes_fact": "disk_errors_reported",
       "no_fact": "disk_errors_absent"
     },
     "q_files_corrupt": {
-      "text": "Are files missing or corrupted?",
+      "text": {
+        "en": "Are files missing or corrupted?",
+        "ar": "هل هناك ملفات مفقودة أو تالفة؟"
+      },
       "yes_fact": "files_missing_corrupt",
       "no_fact": "files_intact"
     },
     "q_ram_usage": {
-      "text": "Is RAM usage close to 100% even with few programs open?",
+      "text": {
+        "en": "Is RAM usage close to 100% even with few programs open?",
+        "ar": "هل استخدام الذاكرة قريب من 100% حتى مع فتح برامج قليلة؟"
+      },
       "yes_fact": "ram_usage_high",
       "no_fact": "ram_usage_normal"
     },
     "q_freezes": {
-      "text": "Does the system freeze or become unresponsive?",
+      "text": {
+        "en": "Does the system freeze or become unresponsive?",
+        "ar": "هل يتجمد النظام أو يصبح بلا استجابة؟"
+      },
       "yes_fact": "system_freezes",
       "no_fact": "system_responsive"
     },
     "q_app_crashes": {
-      "text": "Do applications crash frequently?",
+      "text": {
+        "en": "Do applications crash frequently?",
+        "ar": "هل تتعطل التطبيقات بشكل متكرر؟"
+      },
       "yes_fact": "frequent_app_crashes",
       "no_fact": "apps_stable"
     },
     "q_ram_detected": {
-      "text": "Does the system show all the installed RAM?",
+      "text": {
+        "en": "Does the system show all the installed RAM?",
+        "ar": "هل يعرض النظام كل الذاكرة المثبتة؟"
+      },
       "yes_fact": "ram_sticks_detected",
       "no_fact": "ram_sticks_missing"
     },
     "q_device_detected": {
-      "text": "Does the operating system detect the device?",
+      "text": {
+        "en": "Does the operating system detect the device?",
+        "ar": "هل يكتشف نظام التشغيل الجهاز؟"
+      },
       "yes_fact": "device_detected",
       "no_fact": "device_not_detected"
     },
     "q_device_other_port": {
-      "text": "Does the device work when connected to a different port?",
+      "text": {
+        "en": "Does the device work when connected to a different port?",
+        "ar": "هل يعمل الجهاز عند توصيله بمنفذ مختلف؟"
+      },
       "yes_fact": "device_works_in_another_port",
       "no_fact": "device_fails_any_port"
     },
     "q_device_other_computer": {
-      "text": "Does the device work when connected to another computer?",
+      "text": {
+        "en": "Does the device work when connected to another computer?",
+        "ar": "هل يعمل الجهاز عند توصيله بحاسوب آخر؟"
+      },
       "yes_fact": "device_works_on_other_computer",
       "no_fact": "device_fails_other_computer"
     },
     "q_driver": {
-      "text": "Does the system show a driver warning for the device?",
+      "text": {
+        "en": "Does the system show a driver warning for the device?",
+        "ar": "هل يعرض النظام تحذيراً بشأن برنامج تشغيل الجهاز؟"
+      },
       "yes_fact": "driver_issue",
       "no_fact": "drivers_installed"
     }

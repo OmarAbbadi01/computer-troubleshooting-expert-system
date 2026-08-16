@@ -1,314 +1,482 @@
 {
   "diagnoses": {
     "diagnosis_power": {
-      "name": "Power problem",
-      "default_recommendation": "Check the power connections and try a different wall socket."
+      "name": {
+        "en": "Power problem",
+        "ar": "مشكلة في الطاقة"
+      },
+      "default_recommendation": {
+        "en": "Check the power connections and try a different wall socket.",
+        "ar": "تحقق من توصيلات الطاقة وجرّب مقبس حائط مختلفاً."
+      }
     },
     "diagnosis_display": {
-      "name": "Display problem",
-      "default_recommendation": "Check the monitor cable and try a different port or screen."
+      "name": {
+        "en": "Display problem",
+        "ar": "مشكلة في الشاشة"
+      },
+      "default_recommendation": {
+        "en": "Check the monitor cable and try a different port or screen.",
+        "ar": "تحقق من كابل الشاشة وجرّب منفذاً أو شاشة مختلفة."
+      }
     },
     "diagnosis_boot": {
-      "name": "Boot / operating-system problem",
-      "default_recommendation": "Try Safe Mode and use the operating system startup repair."
+      "name": {
+        "en": "Boot / operating-system problem",
+        "ar": "مشكلة في الإقلاع/نظام التشغيل"
+      },
+      "default_recommendation": {
+        "en": "Try Safe Mode and use the operating system startup repair.",
+        "ar": "جرّب الوضع الآمن واستخدم إصلاح بدء التشغيل في نظام التشغيل."
+      }
     },
     "diagnosis_performance": {
-      "name": "Performance problem",
-      "default_recommendation": "Close background programs and free up disk space."
+      "name": {
+        "en": "Performance problem",
+        "ar": "مشكلة في الأداء"
+      },
+      "default_recommendation": {
+        "en": "Close background programs and free up disk space.",
+        "ar": "أغلق البرامج في الخلفية ووفّر مساحة على القرص."
+      }
     },
     "diagnosis_overheating": {
-      "name": "Overheating problem",
-      "default_recommendation": "Check that the cooling vents are not blocked and the fans work."
+      "name": {
+        "en": "Overheating problem",
+        "ar": "مشكلة في ارتفاع الحرارة"
+      },
+      "default_recommendation": {
+        "en": "Check that the cooling vents are not blocked and the fans work.",
+        "ar": "تأكد من عدم انسداد فتحات التبريد وأن المروحات تعمل."
+      }
     },
     "diagnosis_network": {
-      "name": "Network problem",
-      "default_recommendation": "Restart the router/modem and check the internet connection."
+      "name": {
+        "en": "Network problem",
+        "ar": "مشكلة في الشبكة"
+      },
+      "default_recommendation": {
+        "en": "Restart the router/modem and check the internet connection.",
+        "ar": "أعد تشغيل جهاز التوجيه/المودم وتحقق من اتصال الإنترنت."
+      }
     },
     "diagnosis_storage": {
-      "name": "Storage problem",
-      "default_recommendation": "Free up disk space and run a disk-check tool."
+      "name": {
+        "en": "Storage problem",
+        "ar": "مشكلة في التخزين"
+      },
+      "default_recommendation": {
+        "en": "Free up disk space and run a disk-check tool.",
+        "ar": "وفّر مساحة على القرص وشغّل أداة فحص القرص."
+      }
     },
     "diagnosis_memory": {
-      "name": "Memory problem",
-      "default_recommendation": "Close unused programs and consider adding more RAM."
+      "name": {
+        "en": "Memory problem",
+        "ar": "مشكلة في الذاكرة"
+      },
+      "default_recommendation": {
+        "en": "Close unused programs and consider adding more RAM.",
+        "ar": "أغلق البرامج غير المستخدمة وفكر في إضافة المزيد من الذاكرة."
+      }
     },
     "diagnosis_peripheral": {
-      "name": "Peripheral/device problem",
-      "default_recommendation": "Reconnect the device and check its driver."
+      "name": {
+        "en": "Peripheral/device problem",
+        "ar": "مشكلة في الملحق/الجهاز الطرفي"
+      },
+      "default_recommendation": {
+        "en": "Reconnect the device and check its driver.",
+        "ar": "أعد توصيل الجهاز وتحقق من برنامج التشغيل الخاص به."
+      }
     }
-  },
-  "intermediate_facts": {
-    "power_delivery_issue": "Possible problem delivering power to the computer",
-    "internal_power_fault": "Possible internal power fault (e.g., power supply)",
-    "display_path_fault": "Possible display-path failure",
-    "backlight_or_panel_fault": "Possible laptop screen / backlight failure",
-    "os_boot_reached": "Operating system reached the boot stage",
-    "os_boot_failed": "Operating system fails to boot",
-    "system_slow_indicators": "General slowness indicators",
-    "startup_overload": "Too many programs start with the system",
-    "cooling_problem": "Cooling problem exists",
-    "local_connectivity_only": "Connectivity works only locally",
-    "storage_pressure": "Storage pressure exists",
-    "memory_pressure": "Memory pressure exists"
   },
   "rules": [
     {
       "id": "P1",
-      "priority": 2,
       "conditions": ["power_cable_loose"],
       "conclusions": ["power_delivery_issue"],
-      "explanation": "The power cable is not connected firmly, so electricity may not reach the computer."
+      "explanation": {
+        "en": "The power cable is not connected firmly, so electricity may not reach the computer.",
+        "ar": "كابل الطاقة غير موصول بإحكام، لذلك قد لا يصل التيار الكهربائي إلى الحاسوب."
+      }
     },
     {
       "id": "P2",
-      "priority": 2,
       "conditions": ["outlet_power_fails"],
       "conclusions": ["power_delivery_issue"],
-      "explanation": "The wall socket is not supplying power correctly, so the computer cannot receive electricity."
+      "explanation": {
+        "en": "The wall socket is not supplying power correctly, so the computer cannot receive electricity.",
+        "ar": "مقبس الحائط لا يزود بالكهرباء بشكل صحيح، لذلك لا يمكن للحاسوب استقبال التيار."
+      }
     },
     {
       "id": "P3",
-      "priority": 9,
       "conditions": ["power_delivery_issue", "power_led_off"],
       "conclusions": ["diagnosis_power"],
-      "explanation": "The power LED is off and the system inferred a problem delivering power to the computer, which points to a power problem.",
-      "recommendation": "Check the power cable connections and try another wall socket. For a laptop, also check the charger."
+      "explanation": {
+        "en": "The power LED is off and the system inferred a problem delivering power to the computer, which points to a power problem.",
+        "ar": "مؤشر الطاقة مطفأ وقد استنتج النظام وجود مشكلة في إيصال الطاقة إلى الحاسوب، مما يشير إلى مشكلة في الطاقة."
+      },
+      "recommendation": {
+        "en": "Check the power cable connections and try another wall socket. For a laptop, also check the charger.",
+        "ar": "تحقق من توصيلات كابل الطاقة وجرّب مقبس حائط آخر. بالنسبة للحاسوب المحمول، تحقق أيضاً من الشاحن."
+      }
     },
     {
       "id": "P4",
-      "priority": 3,
       "conditions": ["power_led_off", "fans_not_running", "power_cable_ok", "outlet_power_ok"],
       "conclusions": ["internal_power_fault"],
-      "explanation": "Power reaches the computer (cable and socket are fine) but pressing the power button produces no LED and no fans, suggesting an internal power fault such as a failing power supply."
+      "explanation": {
+        "en": "Power reaches the computer (cable and socket are fine) but pressing the power button produces no LED and no fans, suggesting an internal power fault such as a failing power supply.",
+        "ar": "الطاقة تصل إلى الحاسوب (الكابل والمقبس سليمان) لكن الضغط على زر الطاقة لا يضيء المؤشر ولا يشغّل المروحات، مما يشير إلى عطل داخلي في الطاقة مثل تلف مصدر الطاقة."
+      }
     },
     {
       "id": "P5",
-      "priority": 8,
       "conditions": ["internal_power_fault"],
       "conclusions": ["diagnosis_power"],
-      "explanation": "The system inferred an internal power fault because the machine receives power from the wall but cannot switch on. This is a power problem.",
-      "recommendation": "Check that the power supply connections are seated correctly. If the problem persists, the power supply may need professional repair."
+      "explanation": {
+        "en": "The system inferred an internal power fault because the machine receives power from the wall but cannot switch on. This is a power problem.",
+        "ar": "استنتج النظام وجود عطل داخلي في الطاقة لأن الجهاز يستقبل الكهرباء من المقبس لكنه لا يعمل. هذه مشكلة في الطاقة."
+      },
+      "recommendation": {
+        "en": "Check that the power supply connections are seated correctly. If the problem persists, the power supply may need professional repair.",
+        "ar": "تأكد من أن توصيلات مصدر الطاقة مثبتة بشكل صحيح. إذا استمرت المشكلة، فقد يحتاج مصدر الطاقة إلى إصلاح متخصص."
+      }
     },
     {
       "id": "D1",
-      "priority": 3,
       "conditions": ["computer_running", "screen_blank", "post_screen_blank"],
       "conclusions": ["display_path_fault"],
-      "explanation": "The computer is running but the screen stays blank even during startup, so no display signal is reaching the screen."
+      "explanation": {
+        "en": "The computer is running but the screen stays blank even during startup, so no display signal is reaching the screen.",
+        "ar": "الحاسوب يعمل لكن الشاشة تبقى فارغة حتى أثناء الإقلاع، لذلك لا تصل أي إشارة عرض إلى الشاشة."
+      }
     },
     {
       "id": "D2",
-      "priority": 8,
       "conditions": ["display_path_fault"],
       "conclusions": ["diagnosis_display"],
-      "explanation": "The system first inferred a display-path failure: the computer runs but shows no picture at all. This is a display problem.",
-      "recommendation": "Check the monitor cable and try a different port or monitor. For a laptop, connect an external screen to test."
+      "explanation": {
+        "en": "The system first inferred a display-path failure: the computer runs but shows no picture at all. This is a display problem.",
+        "ar": "استنتج النظام أولاً وجود خلل في مسار العرض: الحاسوب يعمل لكنه لا يعرض أي صورة. هذه مشكلة في الشاشة."
+      },
+      "recommendation": {
+        "en": "Check the monitor cable and try a different port or monitor. For a laptop, connect an external screen to test.",
+        "ar": "تحقق من كابل الشاشة وجرّب منفذاً أو شاشة مختلفة. بالنسبة للحاسوب المحمول، وصّل شاشة خارجية للاختبار."
+      }
     },
     {
       "id": "D3",
-      "priority": 3,
       "conditions": ["external_monitor_works", "screen_blank"],
       "conclusions": ["backlight_or_panel_fault"],
-      "explanation": "The built-in screen is blank but an external monitor shows a picture, so the laptop still produces a display signal and the screen or its backlight is faulty."
+      "explanation": {
+        "en": "The built-in screen is blank but an external monitor shows a picture, so the laptop still produces a display signal and the screen or its backlight is faulty.",
+        "ar": "الشاشة المدمجة فارغة لكن الشاشة الخارجية تعرض صورة، لذا ما زال الحاسوب المحمول ينتج إشارة عرض والشاشة أو الإضاءة الخلفية معطوبة."
+      }
     },
     {
       "id": "D4",
-      "priority": 8,
       "conditions": ["backlight_or_panel_fault"],
       "conclusions": ["diagnosis_display"],
-      "explanation": "The system inferred that the built-in screen or its backlight is faulty because an external monitor works. This is a display problem.",
-      "recommendation": "Use an external monitor meanwhile; the built-in screen or backlight may need service."
+      "explanation": {
+        "en": "The system inferred that the built-in screen or its backlight is faulty because an external monitor works. This is a display problem.",
+        "ar": "استنتج النظام أن الشاشة المدمجة أو الإضاءة الخلفية معطوبة لأن الشاشة الخارجية تعمل. هذه مشكلة في الشاشة."
+      },
+      "recommendation": {
+        "en": "Use an external monitor meanwhile; the built-in screen or backlight may need service.",
+        "ar": "استخدم شاشة خارجية في هذه الأثناء؛ قد تحتاج الشاشة المدمجة أو الإضاءة الخلفية إلى صيانة."
+      }
     },
     {
       "id": "B1",
-      "priority": 2,
       "conditions": ["os_loading_screen_visible"],
       "conclusions": ["os_boot_reached"],
-      "explanation": "The operating system loading screen appeared, so the OS reached the boot stage."
+      "explanation": {
+        "en": "The operating system loading screen appeared, so the OS reached the boot stage.",
+        "ar": "ظهرت شاشة تحميل نظام التشغيل، لذلك وصل نظام التشغيل إلى مرحلة الإقلاع."
+      }
     },
     {
       "id": "B2",
-      "priority": 8,
       "conditions": ["os_boot_reached", "bsod_occurs"],
       "conclusions": ["diagnosis_boot"],
-      "explanation": "The system inferred that the operating system reached the boot stage, but it then shows an error screen. This indicates a boot or operating-system problem.",
-      "recommendation": "Try Safe Mode and use the operating system startup repair. If you recently installed software, consider removing it."
+      "explanation": {
+        "en": "The system inferred that the operating system reached the boot stage, but it then shows an error screen. This indicates a boot or operating-system problem.",
+        "ar": "استنتج النظام أن نظام التشغيل وصل إلى مرحلة الإقلاع لكنه يعرض بعدها شاشة خطأ. هذا يشير إلى مشكلة في الإقلاع أو نظام التشغيل."
+      },
+      "recommendation": {
+        "en": "Try Safe Mode and use the operating system startup repair. If you recently installed software, consider removing it.",
+        "ar": "جرّب الوضع الآمن واستخدم إصلاح بدء التشغيل في نظام التشغيل. إذا كنت قد ثبّت برنامجاً مؤخراً، ففكر في إزالته."
+      }
     },
     {
       "id": "B3",
-      "priority": 3,
       "conditions": ["post_screen_visible", "os_loading_screen_absent"],
       "conclusions": ["os_boot_failed"],
-      "explanation": "The BIOS screen appears but the operating system never starts loading, so the OS fails to reach the boot stage."
+      "explanation": {
+        "en": "The BIOS screen appears but the operating system never starts loading, so the OS fails to reach the boot stage.",
+        "ar": "تظهر شاشة BIOS لكن نظام التشغيل لا يبدأ التحميل أبداً، لذلك يفشل نظام التشغيل في الوصول إلى مرحلة الإقلاع."
+      }
     },
     {
       "id": "B4",
-      "priority": 8,
       "conditions": ["os_boot_failed"],
       "conclusions": ["diagnosis_boot"],
-      "explanation": "The system inferred that the operating system fails to boot after the BIOS screen. This is a boot or operating-system problem.",
-      "recommendation": "Try Safe Mode, use a repair/recovery drive, or reinstall the operating system after backing up your data."
+      "explanation": {
+        "en": "The system inferred that the operating system fails to boot after the BIOS screen. This is a boot or operating-system problem.",
+        "ar": "استنتج النظام أن نظام التشغيل يفشل في الإقلاع بعد شاشة BIOS. هذه مشكلة في الإقلاع أو نظام التشغيل."
+      },
+      "recommendation": {
+        "en": "Try Safe Mode, use a repair/recovery drive, or reinstall the operating system after backing up your data.",
+        "ar": "جرّب الوضع الآمن، أو استخدم محرك إصلاح/استعادة، أو أعد تثبيت نظام التشغيل بعد عمل نسخة احتياطية من بياناتك."
+      }
     },
     {
       "id": "PERF1",
-      "priority": 2,
       "conditions": ["os_loads_slowly", "programs_launch_slowly"],
       "conclusions": ["system_slow_indicators"],
-      "explanation": "The operating system starts slowly and programs are slow to open, so the system generally runs slowly."
+      "explanation": {
+        "en": "The operating system starts slowly and programs are slow to open, so the system generally runs slowly.",
+        "ar": "نظام التشغيل يبدأ ببطء والبرامج تفتح ببطء، لذلك يعمل النظام ببطء بشكل عام."
+      }
     },
     {
       "id": "PERF2",
-      "priority": 8,
       "conditions": ["system_slow_indicators", "disk_nearly_full"],
       "conclusions": ["diagnosis_performance"],
-      "explanation": "The system runs slowly and the disk is almost full, which explains the poor performance.",
-      "recommendation": "Free up disk space by removing unnecessary files and programs."
+      "explanation": {
+        "en": "The system runs slowly and the disk is almost full, which explains the poor performance.",
+        "ar": "النظام يعمل ببطء والقرص ممتلئ تقريباً، وهذا يفسر ضعف الأداء."
+      },
+      "recommendation": {
+        "en": "Free up disk space by removing unnecessary files and programs.",
+        "ar": "وفّر مساحة على القرص بحذف الملفات والبرامج غير الضرورية."
+      }
     },
     {
       "id": "PERF3",
-      "priority": 3,
       "conditions": ["system_slow_indicators", "many_startup_programs"],
       "conclusions": ["startup_overload"],
-      "explanation": "Many programs start with Windows while the system is slow, so startup is overloaded."
+      "explanation": {
+        "en": "Many programs start with Windows while the system is slow, so startup is overloaded.",
+        "ar": "العديد من البرامج تبدأ مع النظام بينما النظام بطيء، لذلك بدء التشغيل مثقل."
+      }
     },
     {
       "id": "PERF4",
-      "priority": 8,
       "conditions": ["startup_overload"],
       "conclusions": ["diagnosis_performance"],
-      "explanation": "The system inferred a startup overload: too many programs start with Windows, slowing the boot and responsiveness.",
-      "recommendation": "Disable unnecessary startup programs from Task Manager."
+      "explanation": {
+        "en": "The system inferred a startup overload: too many programs start with Windows, slowing the boot and responsiveness.",
+        "ar": "استنتج النظام وجود ازدحام في بدء التشغيل: عدد كبير جداً من البرامج تبدأ مع النظام مما يبطئ الإقلاع والاستجابة."
+      },
+      "recommendation": {
+        "en": "Disable unnecessary startup programs from Task Manager.",
+        "ar": "عطّل برامج بدء التشغيل غير الضرورية من إدارة المهام."
+      }
     },
     {
       "id": "O1",
-      "priority": 3,
       "conditions": ["computer_running", "computer_hot", "fans_not_running"],
       "conclusions": ["cooling_problem"],
-      "explanation": "The computer is running and hot, but the cooling fans are not spinning, so cooling is not working."
+      "explanation": {
+        "en": "The computer is running and hot, but the cooling fans are not spinning, so cooling is not working.",
+        "ar": "الحاسوب يعمل وهو ساخن لكن مروحات التبريد لا تدور، لذلك التبريد لا يعمل."
+      }
     },
     {
       "id": "O2",
-      "priority": 3,
       "conditions": ["computer_hot", "vents_blocked"],
       "conclusions": ["cooling_problem"],
-      "explanation": "The computer is hot and its ventilation openings are blocked, so heat cannot escape."
+      "explanation": {
+        "en": "The computer is hot and its ventilation openings are blocked, so heat cannot escape.",
+        "ar": "الحاسوب ساخن وفتحات التهوية مسدودة، لذلك لا تستطيع الحرارة الخروج."
+      }
     },
     {
       "id": "O3",
-      "priority": 8,
       "conditions": ["cooling_problem", "shuts_down_unexpectedly"],
       "conclusions": ["diagnosis_overheating"],
-      "explanation": "The system first inferred a cooling problem, which combined with unexpected shutdowns supports an overheating diagnosis.",
-      "recommendation": "Check that the cooling vents are not blocked and verify that the cooling fans are operating normally."
+      "explanation": {
+        "en": "The system first inferred a cooling problem, which combined with unexpected shutdowns supports an overheating diagnosis.",
+        "ar": "استنتج النظام أولاً وجود مشكلة في التبريد، ودمجها مع الانطفاء المفاجئ يدعم تشخيص ارتفاع الحرارة."
+      },
+      "recommendation": {
+        "en": "Check that the cooling vents are not blocked and verify that the cooling fans are operating normally.",
+        "ar": "تأكد من عدم انسداد فتحات التبريد وتحقق من أن مروحات التبريد تعمل بشكل طبيعي."
+      }
     },
     {
       "id": "O4",
-      "priority": 8,
       "conditions": ["computer_hot", "fan_unusually_noisy", "shuts_down_unexpectedly"],
       "conclusions": ["diagnosis_overheating"],
-      "explanation": "The computer is unusually hot, its fan is loud, and it shuts down unexpectedly — classic signs of overheating.",
-      "recommendation": "Clean the dust from the fans and vents and make sure nothing blocks the airflow."
+      "explanation": {
+        "en": "The computer is unusually hot, its fan is loud, and it shuts down unexpectedly — classic signs of overheating.",
+        "ar": "الحاسوب ساخن بشكل غير طبيعي ومروحته صاخبة وينطفئ فجأة — وهي علامات كلاسيكية لارتفاع الحرارة."
+      },
+      "recommendation": {
+        "en": "Clean the dust from the fans and vents and make sure nothing blocks the airflow.",
+        "ar": "نظّف الغبار من المروحات والفتحات وتأكد من عدم وجود ما يعيق تدفق الهواء."
+      }
     },
     {
       "id": "NET1",
-      "priority": 3,
       "conditions": ["wifi_connected", "router_reachable", "internet_unreachable"],
       "conclusions": ["local_connectivity_only"],
-      "explanation": "The computer is connected to Wi-Fi and reaches the router, but cannot reach the internet, so connectivity works only locally."
+      "explanation": {
+        "en": "The computer is connected to Wi-Fi and reaches the router, but cannot reach the internet, so connectivity works only locally.",
+        "ar": "الحاسوب متصل بشبكة Wi-Fi ويصل إلى جهاز التوجيه لكنه لا يصل إلى الإنترنت، لذلك الاتصال يعمل محلياً فقط."
+      }
     },
     {
       "id": "NET2",
-      "priority": 8,
       "conditions": ["local_connectivity_only"],
       "conclusions": ["diagnosis_network"],
-      "explanation": "The system inferred that connectivity works only inside the local network. Since the internet is unreachable, this is a network problem.",
-      "recommendation": "Restart the router and modem. If the problem persists, contact your internet service provider."
+      "explanation": {
+        "en": "The system inferred that connectivity works only inside the local network. Since the internet is unreachable, this is a network problem.",
+        "ar": "استنتج النظام أن الاتصال يعمل فقط داخل الشبكة المحلية. وبما أن الإنترنت غير متاح، فهذه مشكلة في الشبكة."
+      },
+      "recommendation": {
+        "en": "Restart the router and modem. If the problem persists, contact your internet service provider.",
+        "ar": "أعد تشغيل جهاز التوجيه والمودم. إذا استمرت المشكلة، تواصل مع مزود خدمة الإنترنت."
+      }
     },
     {
       "id": "NET3",
-      "priority": 8,
       "conditions": ["wifi_no_networks", "other_devices_offline"],
       "conclusions": ["diagnosis_network"],
-      "explanation": "No Wi-Fi networks are visible and other devices are offline too, so the network itself is failing.",
-      "recommendation": "Restart the router. If it still fails, check the internet connection with your service provider."
+      "explanation": {
+        "en": "No Wi-Fi networks are visible and other devices are offline too, so the network itself is failing.",
+        "ar": "لا تظهر أي شبكات Wi-Fi والأجهزة الأخرى غير متصلة أيضاً، لذلك الشبكة نفسها معطلة."
+      },
+      "recommendation": {
+        "en": "Restart the router. If it still fails, check the internet connection with your service provider.",
+        "ar": "أعد تشغيل جهاز التوجيه. إذا استمر الفشل، تحقق من اتصال الإنترنت مع مزود الخدمة."
+      }
     },
     {
       "id": "NET4",
-      "priority": 8,
       "conditions": ["ip_address_missing", "router_reachable", "wifi_connected"],
       "conclusions": ["diagnosis_network"],
-      "explanation": "The computer is connected to Wi-Fi and can reach the router, but it does not obtain a valid IP address, indicating a network problem.",
-      "recommendation": "Renew the IP address (release/renew in the network settings) and restart the router."
+      "explanation": {
+        "en": "The computer is connected to Wi-Fi and can reach the router, but it does not obtain a valid IP address, indicating a network problem.",
+        "ar": "الحاسوب متصل بشبكة Wi-Fi ويصل إلى جهاز التوجيه لكنه لا يحصل على عنوان IP صالح، مما يشير إلى مشكلة في الشبكة."
+      },
+      "recommendation": {
+        "en": "Renew the IP address (release/renew in the network settings) and restart the router.",
+        "ar": "جدّد عنوان IP (تحرير/تجديد في إعدادات الشبكة) وأعد تشغيل جهاز التوجيه."
+      }
     },
     {
       "id": "S1",
-      "priority": 3,
       "conditions": ["disk_nearly_full", "disk_activity_high"],
       "conclusions": ["storage_pressure"],
-      "explanation": "The disk is almost full and constantly busy, so it is under storage pressure."
+      "explanation": {
+        "en": "The disk is almost full and constantly busy, so it is under storage pressure.",
+        "ar": "القرص ممتلئ تقريباً ومشغول باستمرار، لذلك يعاني من ضغط في التخزين."
+      }
     },
     {
       "id": "S2",
-      "priority": 8,
       "conditions": ["storage_pressure"],
       "conclusions": ["diagnosis_storage"],
-      "explanation": "The system inferred storage pressure because the disk is nearly full and continuously active, indicating a storage problem.",
-      "recommendation": "Free up disk space by removing unnecessary files, emptying the recycle bin, and uninstalling unused programs."
+      "explanation": {
+        "en": "The system inferred storage pressure because the disk is nearly full and continuously active, indicating a storage problem.",
+        "ar": "استنتج النظام ضغطاً في التخزين لأن القرص ممتلئ تقريباً ونشط باستمرار، مما يشير إلى مشكلة في التخزين."
+      },
+      "recommendation": {
+        "en": "Free up disk space by removing unnecessary files, emptying the recycle bin, and uninstalling unused programs.",
+        "ar": "وفّر مساحة على القرص بحذف الملفات غير الضرورية وإفراغ سلة المحذوفات وإلغاء تثبيت البرامج غير المستخدمة."
+      }
     },
     {
       "id": "S3",
-      "priority": 8,
       "conditions": ["disk_errors_reported", "files_missing_corrupt"],
       "conclusions": ["diagnosis_storage"],
-      "explanation": "The disk reports errors and files are missing or corrupted, which indicates a storage problem.",
-      "recommendation": "Back up your important data and run the operating system's disk-check tool to look for bad sectors."
+      "explanation": {
+        "en": "The disk reports errors and files are missing or corrupted, which indicates a storage problem.",
+        "ar": "القرص يبلغ عن أخطاء والملفات مفقودة أو تالفة، مما يشير إلى مشكلة في التخزين."
+      },
+      "recommendation": {
+        "en": "Back up your important data and run the operating system's disk-check tool to look for bad sectors.",
+        "ar": "احتفظ بنسخة احتياطية من بياناتك المهمة وشغّل أداة فحص القرص في نظام التشغيل للبحث عن القطاعات التالفة."
+      }
     },
     {
       "id": "M1",
-      "priority": 3,
       "conditions": ["ram_usage_high", "system_freezes"],
       "conclusions": ["memory_pressure"],
-      "explanation": "RAM usage is near its limit and the system freezes, so memory is under pressure."
+      "explanation": {
+        "en": "RAM usage is near its limit and the system freezes, so memory is under pressure.",
+        "ar": "استخدام الذاكرة قريب من الحد الأقصى والنظام يتجمد، لذلك الذاكرة تحت ضغط."
+      }
     },
     {
       "id": "M2",
-      "priority": 8,
       "conditions": ["memory_pressure"],
       "conclusions": ["diagnosis_memory"],
-      "explanation": "The system inferred memory pressure because RAM is nearly exhausted and the system freezes, indicating a memory problem.",
-      "recommendation": "Close unnecessary programs and consider adding more RAM."
+      "explanation": {
+        "en": "The system inferred memory pressure because RAM is nearly exhausted and the system freezes, indicating a memory problem.",
+        "ar": "استنتج النظام ضغطاً على الذاكرة لأن الذاكرة شبه مستنفدة والنظام يتجمد، مما يشير إلى مشكلة في الذاكرة."
+      },
+      "recommendation": {
+        "en": "Close unnecessary programs and consider adding more RAM.",
+        "ar": "أغلق البرامج غير الضرورية وفكر في إضافة المزيد من الذاكرة."
+      }
     },
     {
       "id": "M3",
-      "priority": 8,
       "conditions": ["ram_sticks_missing", "frequent_app_crashes"],
       "conclusions": ["diagnosis_memory"],
-      "explanation": "Some installed RAM is not detected and applications crash frequently, indicating a memory problem.",
-      "recommendation": "Reseat the memory modules and test each memory stick individually."
+      "explanation": {
+        "en": "Some installed RAM is not detected and applications crash frequently, indicating a memory problem.",
+        "ar": "بعض الذاكرة المثبتة غير مكتشفة والتطبيقات تتعطل كثيراً، مما يشير إلى مشكلة في الذاكرة."
+      },
+      "recommendation": {
+        "en": "Reseat the memory modules and test each memory stick individually.",
+        "ar": "أعد تثبيت شرائح الذاكرة واختبر كل شريحة على حدة."
+      }
     },
     {
       "id": "PE1",
-      "priority": 8,
       "conditions": ["device_not_detected", "device_fails_any_port", "device_fails_other_computer"],
       "conclusions": ["diagnosis_peripheral"],
-      "explanation": "The device is not detected in any port and also fails on another computer, so the device itself is faulty.",
-      "recommendation": "Try the device on another computer to confirm. If it fails there too, the device may need replacement."
+      "explanation": {
+        "en": "The device is not detected in any port and also fails on another computer, so the device itself is faulty.",
+        "ar": "الجهاز غير مكتشف في أي منفذ ويفشل أيضاً على حاسوب آخر، لذلك الجهاز نفسه معطوب."
+      },
+      "recommendation": {
+        "en": "Try the device on another computer to confirm. If it fails there too, the device may need replacement.",
+        "ar": "جرّب الجهاز على حاسوب آخر للتأكد. إذا فشل هناك أيضاً، فقد يحتاج الجهاز إلى استبدال."
+      }
     },
     {
       "id": "PE2",
-      "priority": 8,
       "conditions": ["device_not_detected", "device_works_in_another_port"],
       "conclusions": ["diagnosis_peripheral"],
-      "explanation": "The device is not detected in the original port but works in a different port, so the original port is faulty.",
-      "recommendation": "Use the working port or have the faulty port checked."
+      "explanation": {
+        "en": "The device is not detected in the original port but works in a different port, so the original port is faulty.",
+        "ar": "الجهاز غير مكتشف في المنفذ الأصلي لكنه يعمل في منفذ مختلف، لذلك المنفذ الأصلي معطوب."
+      },
+      "recommendation": {
+        "en": "Use the working port or have the faulty port checked.",
+        "ar": "استخدم المنفذ العامل أو اطلب فحص المنفذ المعطوب."
+      }
     },
     {
       "id": "PE3",
-      "priority": 8,
       "conditions": ["device_detected", "driver_issue"],
       "conclusions": ["diagnosis_peripheral"],
-      "explanation": "The device is detected but the operating system shows a driver problem, so the device cannot be used correctly.",
-      "recommendation": "Reinstall or update the device driver from Device Manager."
+      "explanation": {
+        "en": "The device is detected but the operating system shows a driver problem, so the device cannot be used correctly.",
+        "ar": "الجهاز مكتشف لكن نظام التشغيل يعرض مشكلة في برنامج التشغيل، لذلك لا يمكن استخدام الجهاز بشكل صحيح."
+      },
+      "recommendation": {
+        "en": "Reinstall or update the device driver from Device Manager.",
+        "ar": "أعد تثبيت أو حدّث برنامج تشغيل الجهاز من إدارة الأجهزة."
+      }
     }
   ]
 }
