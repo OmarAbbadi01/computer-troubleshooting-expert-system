@@ -1,41 +1,29 @@
-"""Questionnaire: collects facts from the user.
-
-It maps the selected main problem to the relevant questions and turns
-Yes/No answers into facts. It contains no diagnostic logic at all —
-diagnosis is left entirely to the inference engine.
-"""
+"""الاستبيان: يجمع الإجابات من المستخدم ويحولها إلى حقائق."""
 
 from __future__ import annotations
 
 from typing import Dict, List, Optional
 
-from bilingual import render
 from models import MainProblem, Question
 
 
 class Questionnaire:
-    """Asks the relevant questions and converts answers into facts."""
+    """يسأل المستخدم الأسئلة ويحوّل الإجابات إلى حقائق."""
 
-    def __init__(self, problems: List[MainProblem], questions: Dict[str, Question],
-                 lang: str = "en") -> None:
+    def __init__(self, problems: List[MainProblem], questions: Dict[str, Question]) -> None:
         self.problems = problems
         self.questions = questions
-        self.lang = lang
 
     def choose_problem(self, choice_text: Optional[str] = None) -> MainProblem:
-        """Select a main problem by number (used by the CLI)."""
         if choice_text is None:
-            prompt = "أدخل اختيارك (1-9): " if self.lang == "ar" else "Enter your choice (1-9): "
-            choice_text = input(prompt).strip()
+            choice_text = input("أدخل اختيارك (1-9): ").strip()
         try:
             index = int(choice_text) - 1
             if 0 <= index < len(self.problems):
                 return self.problems[index]
         except ValueError:
             pass
-        if self.lang == "ar":
-            raise ValueError(f"'{choice_text}' ليس رقماً صحيحاً لمشكلة.")
-        raise ValueError(f"'{choice_text}' is not a valid problem number.")
+        raise ValueError(f"'{choice_text}' ليس رقماً صحيحاً لمشكلة.")
 
     def collect_facts(
         self,
@@ -43,12 +31,6 @@ class Questionnaire:
         machine_type: str,
         answers: Optional[Dict[str, bool]] = None,
     ) -> List[str]:
-        """Ask every question relevant to the problem and return facts.
-
-        `answers` maps question ids to booleans (True = Yes, False = No)
-        and is used for non-interactive / evaluation runs. When it is
-        None, questions are asked on the command line.
-        """
         facts: List[str] = []
 
         for qid in problem.question_ids:
@@ -72,13 +54,11 @@ class Questionnaire:
         if answers is not None:
             return answers.get(question.id)
 
-        prompt = "(نعم/لا): " if self.lang == "ar" else "(yes/no): "
-        message = "يرجى الإجابة بنعم أو لا." if self.lang == "ar" else "Please answer 'yes' or 'no'."
         while True:
-            print(render(question.text, self.lang))
-            raw = input(prompt).strip().lower()
+            print(question.text)
+            raw = input("(نعم/لا): ").strip().lower()
             if raw in ("y", "yes", "نعم", "ن"):
                 return True
             if raw in ("n", "no", "لا", "ل"):
                 return False
-            print(message)
+            print("يرجى الإجابة بنعم أو لا.")
