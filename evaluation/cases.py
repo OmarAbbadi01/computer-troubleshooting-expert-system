@@ -1,11 +1,6 @@
-"""The ten (plus one) evaluation scenarios.
+"""حالات الاختبار العشر (+1).
 
-These cases exist ONLY for evaluation. They are run through the real
-questionnaire and the real inference engine; the application itself
-never references them and contains no test-case-specific logic.
-
-Each case records the machine type, the selected main problem, the
-Yes/No answers, and the expected diagnosis.
+كل حالة تتضمن نوع الحاسوب، المشكلة المحددة، إيجابات/سلبات، والتشخيص المتوقع.
 """
 
 CASES = [
@@ -20,7 +15,7 @@ CASES = [
             "q_power_cable": True,
             "q_outlet": True,
         },
-        "expected": ["Power problem"],
+        "expected": ["مشكلة في الطاقة"],
         "notes": "Two-step chain: facts -> internal_power_fault -> Power problem.",
     },
     {
@@ -32,9 +27,9 @@ CASES = [
             "q_computer_running": True,
             "q_screen_blank": True,
             "q_post_screen": False,
-            "q_external_monitor": None,  # desktop: not asked
+            "q_external_monitor": None,
         },
-        "expected": ["Display problem"],
+        "expected": ["مشكلة في الشاشة"],
         "notes": "Two-step chain: facts -> display_path_fault -> Display problem.",
     },
     {
@@ -48,7 +43,7 @@ CASES = [
             "q_os_loading_screen": True,
             "q_bsod": True,
         },
-        "expected": ["Boot / operating-system problem"],
+        "expected": ["مشكلة في الإقلاع/نظام التشغيل"],
         "notes": "Two-step chain: facts -> os_boot_reached -> Boot/OS problem.",
     },
     {
@@ -64,7 +59,7 @@ CASES = [
             "q_other_devices": False,
             "q_ip_address": True,
         },
-        "expected": ["Network problem"],
+        "expected": ["مشكلة في الشبكة"],
         "notes": "Two-step chain: facts -> local_connectivity_only -> Network problem.",
     },
     {
@@ -80,7 +75,7 @@ CASES = [
             "q_vent_blocked": False,
             "q_fan_noise": False,
         },
-        "expected": ["Overheating problem"],
+        "expected": ["مشكلة في ارتفاع الحرارة"],
         "notes": "Two-step chain: facts -> cooling_problem -> Overheating problem.",
     },
     {
@@ -95,7 +90,7 @@ CASES = [
             "q_disk_activity": False,
             "q_startup_programs": True,
         },
-        "expected": ["Performance problem"],
+        "expected": ["مشكلة في الأداء"],
         "notes": "Three-step chain: facts -> system_slow_indicators -> startup_overload -> Performance problem.",
     },
     {
@@ -109,7 +104,7 @@ CASES = [
             "q_disk_errors": False,
             "q_files_corrupt": False,
         },
-        "expected": ["Storage problem"],
+        "expected": ["مشكلة في التخزين"],
         "notes": "Two-step chain: facts -> storage_pressure -> Storage problem.",
     },
     {
@@ -123,7 +118,7 @@ CASES = [
             "q_app_crashes": False,
             "q_ram_detected": True,
         },
-        "expected": ["Memory problem"],
+        "expected": ["مشكلة في الذاكرة"],
         "notes": "Two-step chain: facts -> memory_pressure -> Memory problem.",
     },
     {
@@ -137,7 +132,7 @@ CASES = [
             "q_device_other_computer": False,
             "q_driver": False,
         },
-        "expected": ["Peripheral/device problem"],
+        "expected": ["مشكلة في الملحق/الجهاز الطرفي"],
         "notes": "Single-step rule (device itself faulty).",
     },
     {
@@ -152,7 +147,7 @@ CASES = [
             "q_disk_activity": True,
             "q_startup_programs": False,
         },
-        "expected": ["Performance problem", "Storage problem"],
+        "expected": ["مشكلة في الأداء", "مشكلة في التخزين"],
         "notes": "Slow computer with a full, constantly active disk: two independent chains fire.",
     },
     {
