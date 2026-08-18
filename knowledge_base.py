@@ -9,8 +9,8 @@ from typing import Dict, List, Tuple
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "data"))
 
 from models import MainProblem, Question, Rule
-from data.rules import DIAGNOSES, RULES
-from data.questions import MAIN_PROBLEMS, QUESTIONS
+from rules import DIAGNOSES, RULES
+from questions import MAIN_PROBLEMS, QUESTIONS
 
 
 def load_rules() -> List[Rule]:
